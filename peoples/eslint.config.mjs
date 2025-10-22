@@ -76,7 +76,7 @@ export default [
     ignores: ['node_modules', 'package-lock.json', 'public', 'build', '.eslintcache'],
     rules: {
       'comma-dangle': 'off',
-      semi: ['warn', 'always'],
+      semi: ["error", "always"],
       'linebreak-style': 'off',
       'no-underscore-dangle': 'off',
       'no-use-before-define': 'off',
@@ -149,13 +149,19 @@ export default [
 
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-var-requires': 'off',
-      'no-unused-vars': 'off',
+      'no-unused-vars': 'error',
       '@typescript-eslint/no-unused-vars': 'error',
       'unused-imports/no-unused-imports': 'error',
-        'unused-imports/no-unused-vars': [
-          'warn',
-          { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
-        ],
+      'unused-imports/no-unused-vars': [
+        'warn',
+        { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
+      ],
+      "prettier/prettier": [
+        "error",
+        {
+          "semi": true
+        }
+      ]
     },
   },
 ];

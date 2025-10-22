@@ -1,0 +1,39 @@
+.items {
+    gap: 20px;
+    margin-top: 70px;
+
+    > div {
+        flex: 1 1 calc(33.333% - 20px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.num {
+    width: 98px;
+    height: 98px;
+    background: rgba(247, 247, 247, 1);
+    text-align: center;
+    line-height: 98px;
+    color: var(--mantine-primary-color-filled);
+    font-size: 32px;
+}
+
+.text {
+    margin-top: 24px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.banner {
+    margin-top: 100px;
+    height: 390px;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../../../../shared/images/building.png');
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,11 @@
+.nav {
+    padding-top: 15px;
+    
+    > ul  {
+        display: flex;
+
+        > li:not(:last-child) {
+            margin-right: 40px;
+        }
+    }
+}

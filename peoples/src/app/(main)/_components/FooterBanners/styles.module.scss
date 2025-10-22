@@ -1,0 +1,21 @@
+.banner {
+    margin-top: 100px;
+    height: 390px;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../../../../shared/images/room-inside.png');
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.banner2 {
+    margin-top: 20px;
+    margin-bottom: 100px;
+    height: 390px;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../../../../shared/images/phone.png');
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: var(--mantine-primary-color-filled);
+}

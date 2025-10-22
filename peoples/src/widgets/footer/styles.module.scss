@@ -1,0 +1,18 @@
+.footer {
+    background: rgba(243, 243, 246, 1);
+}
+
+.nav {
+    &:first-child {
+        border-bottom: 1px solid #ccc;
+    }
+
+    ul {
+        display: flex;
+        gap: 22px;
+        
+        li {
+            padding: 2rem 0;
+        }
+    }
+}

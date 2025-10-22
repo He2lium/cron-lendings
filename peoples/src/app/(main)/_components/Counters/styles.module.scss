@@ -1,0 +1,24 @@
+.items {
+    flex-direction: column;
+    padding-top: 100px;
+    padding-bottom: 100px;
+
+    > div {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+        > p {
+            text-align: left;
+
+            &:nth-child(1) {
+                width: 35%;
+            }
+            
+            &:nth-child(2) {
+                width: 35%;
+            }
+        }
+    }
+}
