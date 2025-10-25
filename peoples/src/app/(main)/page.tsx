@@ -1,6 +1,6 @@
 'use client';
 
-import { Footer, Header } from '@/widgets';
+import { BookingMeet, Footer, Header } from '@/widgets';
 import { Counters } from './_components/Counters/Counters';
 import { EstateDeals } from './_components/EstateDeals/EstateDeals';
 import { FooterBanners } from './_components/FooterBanners/FooterBanners';
@@ -19,6 +19,8 @@ export default function Home() {
       <Counters />
       <FooterBanners />
       <Footer />
+
+      <BookingMeet />
     </>
   );
 }

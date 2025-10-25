@@ -1,0 +1,25 @@
+.root {
+  position: relative;
+  padding: var(--mantine-spacing-sm);
+  transition: border-color 150ms ease;
+  border-radius: 18px;
+
+  &[data-checked] {
+    background: var(--mantine-primary-color-filled);
+    color: #fff;
+    
+    p {
+        font-weight: 700;
+    }
+  }
+
+//   @mixin hover {
+//     @mixin light {
+//       background-color: var(--mantine-color-gray-0);
+//     }
+
+//     @mixin dark {
+//       background-color: var(--mantine-color-dark-6);
+//     }
+//   }
+}

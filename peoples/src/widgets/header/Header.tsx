@@ -1,5 +1,6 @@
 import logo from '@/shared/images/logo.svg';
 import { Container } from '@/shared/ui';
+import { EventEmitter } from '@/shared/utils';
 import { Box, Button, Flex, Image } from '@mantine/core';
 import NextImage from 'next/image';
 import Link from 'next/link';
@@ -13,7 +14,11 @@ export const Header = () => (
         <Button variant='light' radius='xl' fw={400}>
           Открыть ЦРОН
         </Button>
-        <Button radius='xl' fw={400}>
+        <Button
+          radius='xl'
+          fw={400}
+          onClick={() => EventEmitter.emit('TOGGLE_BOOKING_MEET')}
+        >
           Запланировать встречу
         </Button>
       </Flex>

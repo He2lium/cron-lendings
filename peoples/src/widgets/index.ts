@@ -1,2 +1,3 @@
-export { Footer } from './footer/Footer';
-export { Header } from './header/Header';
+export { BookingMeet } from './BookingMeet/BookingMeet';
+export { Footer } from './Footer/Footer';
+export { Header } from './Header/Header';
