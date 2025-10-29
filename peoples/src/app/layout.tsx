@@ -1,8 +1,8 @@
-import { createTheme, MantineProvider } from '@mantine/core';
+import { createTheme, MantineProvider, Stack } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import { Rubik } from 'next/font/google';
-import '../shared/styles/styles.css';
+import '../shared/styles/styles.scss';
 
 const theme = createTheme({
   headings: {
@@ -15,8 +15,19 @@ const theme = createTheme({
         fontSize: '3.7rem',
         lineHeight: '4rem',
       },
+      h3: {
+        fontSize: '1.5rem',
+        lineHeight: '2rem',
+      },
     },
   },
+  // breakpoints: {
+  //   xs: '325px',
+  //   sm: '640px',
+  //   md: '768px',
+  //   lg: '1024px',
+  //   xl: '1200px',
+  // },
   radius: {
     xs: '2px',
     sm: '4px',
@@ -59,7 +70,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${rubikSans.className} antialiased box-border m-0 p-0`}>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <Stack h='100%' gap={0}>
+            {children}
+          </Stack>
+        </MantineProvider>
       </body>
     </html>
   );

@@ -1,0 +1,20 @@
+.banner {
+    height: 190px;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: url('../../shared/images/crown.png') 120% 120% / 40% no-repeat, linear-gradient(105.08deg, #1187F6 -2.72%, #11DFF6 180.36%);
+    align-items: flex-start;
+
+    > p {
+        color: #fff;
+    }
+
+    button {
+        margin-top: auto;
+    }
+}
+

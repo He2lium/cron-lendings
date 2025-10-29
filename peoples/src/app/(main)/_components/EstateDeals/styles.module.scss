@@ -1,0 +1,28 @@
+.banner {
+    align-items: flex-start;
+    width: 32rem;
+}
+
+.item {
+    p {
+        margin-top: 100px;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .banner {
+        width: 100%;
+    }
+
+    .item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 20px;
+        
+        p {
+            margin-top: 0;
+        }
+    }
+} 

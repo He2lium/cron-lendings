@@ -1,10 +1,10 @@
-import { Container } from '@/shared/ui';
+import { Container } from '@mantine/core';
 import Link from 'next/link';
 import styles from './styles.module.scss';
 
 export const Footer = () => (
   <div className={styles.footer}>
-    <Container>
+    <Container size={1200}>
       <nav className={styles.nav}>
         <ul>
           <li>

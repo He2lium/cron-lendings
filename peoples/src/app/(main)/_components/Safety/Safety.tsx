@@ -1,58 +1,57 @@
-import { Container } from '@/shared/ui';
-import { Button, Flex, Text } from '@mantine/core';
+import { Button, Container, SimpleGrid, Text, Title } from '@mantine/core';
 import styles from './styles.module.scss';
 
 export const Safety = () => (
-  <Container>
-    <Text mt={100} fz='3.7rem' fw='bold' lh={1.2}>
+  <Container size={1200} pt={100}>
+    <Title size='h2' order={2}>
       ЦРОН - место где о вас позаботятся
-    </Text>
-    <Flex className={styles.items} wrap='wrap'>
+    </Title>
+    <SimpleGrid cols={{ xs: 2, sm: 2, md: 3, lg: 3, xl: 3 }} className={styles.items}>
       <div>
-        <Text fz={24} fw={700} lh={1.2} mb={8}>
+        <Title size='h3' order={3} mb='1rem'>
           Подбор квартиры, покупателя, арендатора
-        </Text>
+        </Title>
         <Text>
           Мы найдём подходящий вариант под ваш запрос или поможем выгодно продать и сдать
           объект
         </Text>
       </div>
       <div>
-        <Text fz={24} fw={700} lh={1.2} mb={8}>
+        <Title size='h3' order={3} mb='1rem'>
           Переговорные, уютные офисы, кофе и спокойствие
-        </Text>
+        </Title>
         <Text>Комфортное пространство, где решаются важные вопросы без стресса</Text>
       </div>
       <div>
-        <Text fz={24} fw={700} lh={1.2} mb={8}>
+        <Title size='h3' order={3} mb='1rem'>
           Юридическая проверка объекта
-        </Text>
+        </Title>
         <Text>Проверим историю объекта, документы и исключим риски перед сделкой</Text>
       </div>
       <div>
-        <Text fz={24} fw={700} lh={1.2} mb={8}>
+        <Title size='h3' order={3} mb='1rem'>
           Помощь с ипотекой и страхованием
-        </Text>
+        </Title>
         <Text>
           Подадим заявку в банки, сравним условия и оформим страхование без лишней
           волокиты
         </Text>
       </div>
       <div>
-        <Text fz={24} fw={700} lh={1.2} mb={8}>
+        <Title size='h3' order={3} mb='1rem'>
           Оформление документов без беготни
-        </Text>
+        </Title>
         <Text>Все документы подготовим за вас - останется только подписать</Text>
       </div>
       <div>
-        <Text fz={24} fw={700} lh={1.2} mb={8}>
+        <Title size='h3' order={3} mb='1rem'>
           Запланируйте встречу в комфортном офисе
-        </Text>
+        </Title>
         <Text>Выберите удобные дату и время</Text>
         <Button variant='white' radius='xl' size='lg' fw={400}>
           Запланировать встречу
         </Button>
       </div>
-    </Flex>
+    </SimpleGrid>
   </Container>
 );

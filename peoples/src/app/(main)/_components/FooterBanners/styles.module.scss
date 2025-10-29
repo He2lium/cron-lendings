@@ -19,3 +19,11 @@
     background-repeat: no-repeat;
     background-color: var(--mantine-primary-color-filled);
 }
+
+@media screen and (max-width: 1200px) {
+    .bannerButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+}

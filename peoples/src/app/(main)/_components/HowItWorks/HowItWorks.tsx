@@ -1,14 +1,13 @@
-import { Container } from '@/shared/ui';
-import { Box, Button, Flex, Paper, Text } from '@mantine/core';
+import { Box, Button, Container, Flex, Paper, Text, Title } from '@mantine/core';
 import { IconArrowUpRight } from '@tabler/icons-react';
 import styles from './styles.module.scss';
 
 export const HowItWorks = () => (
   <Box bg='#fbfbfb' pt='7rem' pb='7rem' mt='7rem'>
-    <Container>
-      <Text fz='3.7rem' fw='bold' lh={1.2} className='text-center'>
+    <Container size={1200}>
+      <Title size='h2' order={2} className='text-center'>
         Как это работает?
-      </Text>
+      </Title>
       <Text className='text-center' mt={20} c='rgba(0,0,0,.5)'>
         Три простых шага к сделке с недвижимостью
       </Text>

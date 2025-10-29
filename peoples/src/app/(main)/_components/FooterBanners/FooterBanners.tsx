@@ -1,11 +1,10 @@
-import { Container } from '@/shared/ui';
-import { Box, Button, Paper, Text } from '@mantine/core';
+import { Box, Button, Container, Paper, Text } from '@mantine/core';
 import { IconArrowUpRight } from '@tabler/icons-react';
 import styles from './styles.module.scss';
 
 export const FooterBanners = () => (
   <Box bg='#fbfbfb' pt='7rem' pb='7rem' mt='7rem'>
-    <Container>
+    <Container size={1200}>
       <Paper radius='lg' className={styles.banner} p='xl'>
         <Text fz={40} fw={700} lh={1}>
           ЦРОН рядом когда <br /> нужно помочь
@@ -13,7 +12,7 @@ export const FooterBanners = () => (
         <Text mt={22}>
           Запишитесь на консультацию или <br /> запланируйте встречу
         </Text>
-        <Box mt='auto'>
+        <Box mt='auto' className={styles.bannerButtons}>
           <Button radius='xl' fw={400} size='lg' mr={10}>
             Запланировать встречу
           </Button>

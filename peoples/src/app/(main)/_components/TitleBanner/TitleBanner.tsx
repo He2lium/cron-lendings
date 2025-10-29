@@ -1,5 +1,4 @@
-import { Container } from '@/shared/ui';
-import { Flex, Paper, Text, Title } from '@mantine/core';
+import { Container, Flex, Paper, SimpleGrid, Text, Title } from '@mantine/core';
 import {
   IconBuildingEstate,
   IconChecklist,
@@ -8,16 +7,16 @@ import {
 } from '@tabler/icons-react';
 // import { IconCopy } from '@tabler/icons-react'
 export const TitleBanner = () => (
-  <Container className='text-center'>
-    <Title style={{ marginTop: '10rem' }}>Ваш помощник в мире недвижимости</Title>
+  <Container size={1200} className='text-center'>
+    <Title style={{ marginTop: '11vw' }}>Ваш помощник в мире недвижимости</Title>
     <div className='mt-10'>
       <Text>
         ЦРОН - сервис и пространство, где вы легко решите любые вопросы с недвижимостью:
       </Text>
       <Text>купить, продать, арендовать - с поддержкой профи</Text>
     </div>
-    <Flex justify='space-between' mt={80}>
-      <Paper w='18rem' p='1.5rem' radius='lg' bg='#F7F9FB'>
+    <SimpleGrid cols={{ xl: 4, lg: 4, md: 4, base: 2 }} mt={80}>
+      <Paper p='1.5rem' radius='lg' bg='#F7F9FB'>
         <Flex gap={32} style={{ alignItems: 'center' }}>
           <IconChecklist
             width={46}
@@ -28,7 +27,7 @@ export const TitleBanner = () => (
           <Text ta='left'>Юридическая поддержка</Text>
         </Flex>
       </Paper>
-      <Paper w='18rem' p='1.5rem' radius='lg' bg='#F7F9FB'>
+      <Paper p='1.5rem' radius='lg' bg='#F7F9FB'>
         <Flex gap={32} style={{ alignItems: 'center' }}>
           <IconFileSearch
             width={42}
@@ -39,7 +38,7 @@ export const TitleBanner = () => (
           <Text ta='left'>Проверка недвижимости</Text>
         </Flex>
       </Paper>
-      <Paper w='18rem' p='1.5rem' radius='lg' bg='#F7F9FB'>
+      <Paper p='1.5rem' radius='lg' bg='#F7F9FB'>
         <Flex gap={32} style={{ alignItems: 'center' }}>
           <IconBuildingEstate
             width={44}
@@ -52,7 +51,7 @@ export const TitleBanner = () => (
           </Text>
         </Flex>
       </Paper>
-      <Paper w='18rem' p='1.5rem' radius='lg' bg='#F7F9FB'>
+      <Paper p='1.5rem' radius='lg' bg='#F7F9FB'>
         <Flex gap={32} style={{ alignItems: 'center' }}>
           <IconShield
             width={44}
@@ -65,6 +64,6 @@ export const TitleBanner = () => (
           </Text>
         </Flex>
       </Paper>
-    </Flex>
+    </SimpleGrid>
   </Container>
 );
