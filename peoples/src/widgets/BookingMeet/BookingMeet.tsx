@@ -1,3 +1,5 @@
+'use client';
+
 import { EventEmitter } from '@/shared/utils';
 import { Drawer, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -7,7 +9,7 @@ import { BookSuccess } from './BookSuccess';
 
 export const BookingMeet = () => {
   const [opened, { toggle, close }] = useDisclosure(false);
-  const [sent, setSent] = useState(false);
+  const [sent] = useState(false);
 
   useEffect(() => {
     EventEmitter.on('TOGGLE_BOOKING_MEET', toggle);

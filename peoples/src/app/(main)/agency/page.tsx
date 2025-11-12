@@ -1,26 +1,19 @@
-'use client';
-
-import { BookingMeet, Footer, Header } from '@/widgets';
-import { Counters } from './_components/Counters/Counters';
-import { EstateDeals } from './_components/EstateDeals/EstateDeals';
+import { Comission } from './_components/Comission/Comission';
+import { EstateIssues } from './_components/EstateIssues/EstateIssues';
 import { FooterBanners } from './_components/FooterBanners/FooterBanners';
 import { HowItWorks } from './_components/HowItWorks/HowItWorks';
 import { Safety } from './_components/Safety/Safety';
 import { TitleBanner } from './_components/TitleBanner/TitleBanner';
 
-export default function Home() {
+export default function AgencyPage() {
   return (
     <>
-      <Header />
       <TitleBanner />
-      <EstateDeals />
+      <Comission />
+      <EstateIssues />
       <Safety />
       <HowItWorks />
-      <Counters />
       <FooterBanners />
-      <Footer />
-
-      <BookingMeet />
     </>
   );
 }

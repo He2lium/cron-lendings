@@ -149,7 +149,7 @@ export default [
 
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-var-requires': 'off',
-      'no-unused-vars': 'error',
+      'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 'error',
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [

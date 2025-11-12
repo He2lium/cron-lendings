@@ -1,3 +1,5 @@
+'use cilent';
+
 import { Button, Highlight, Stack, Text } from '@mantine/core';
 import styles from './styles.module.scss';
 

@@ -1,0 +1,35 @@
+.items {
+    width: 100%;
+    flex-direction: column;
+    padding-top: 100px;
+    padding-bottom: 100px;
+
+    > div {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+        > p {
+            text-align: left;
+
+            &:nth-child(1) {
+                width: 35%;
+            }
+            
+            &:nth-child(2) {
+                width: 35%;
+            }
+        }
+    }
+}
+
+.count {
+    font-size: 80px;
+    line-height: 1;
+    font-weight: 700;
+
+    @media screen and (max-width: 1200px) {
+        font-size: 8vw;
+    }
+}

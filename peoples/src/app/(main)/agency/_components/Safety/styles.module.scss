@@ -1,0 +1,69 @@
+.items {
+    gap: 20px;
+    padding: 100px 0;
+
+    > div {
+        height: 600px;
+        background-repeat: no-repeat;
+        border-radius: 16px;
+        padding: 20px;
+        position: relative;
+        background-color: #fff;
+
+        @media screen and (max-width: 1200px) {
+            height: 300px;
+        }
+
+        > p:last-child {
+            letter-spacing: -.1px;
+        }
+
+        &:nth-child(1) {
+            background-image: url('../../../../../shared/images/office2.png');
+            background-size: 85%;
+            background-position: 100% 100%;
+        }
+        
+        &:nth-child(2) {
+            background-image: url('../../../../../shared/images/switched_on.png');
+            background-size: 60%;
+            background-position: center 80%;
+        }
+        
+        &:nth-child(3) {
+            background-image: url('../../../../../shared/images/phone2.png');
+            background-size: 80%;
+            background-position: center bottom;
+        }
+        
+        &:nth-child(4) {
+            background-image: url('../../../../../shared/images/micro.png');
+            background-size: 100%;
+            background-position: 100% 100%;
+        }
+        
+        &:nth-child(5) {
+            background-image: url('../../../../../shared/images/balancer.png');
+            background-size: 100%;
+            background-position: 100% 100%;
+        }
+        
+        &:nth-child(6) {
+            background-image: url('../../../../../shared/images/hands.png');
+            background-size: 100%;
+            background-position: 100% 100%;
+        }
+
+        > p {
+            &:nth-child(2) {
+                color: rgba(0,0,0,.5);
+            }
+        }
+
+        button {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+        }
+    }
+}

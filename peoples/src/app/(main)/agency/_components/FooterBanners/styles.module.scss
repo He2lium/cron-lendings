@@ -1,0 +1,29 @@
+.banner2 {
+    margin-top: 1.5rem;
+    height: 390px;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../../../../../shared/images/sppro-silver.png');
+    background-position: 90% center;
+    background-repeat: no-repeat;
+    background-color: rgba(251, 251, 251, 1);
+}
+
+.banner {
+    margin-top: 20px;
+    height: 390px;
+    display: flex;
+    flex-direction: column;
+    background-image: url('/a_flat_inside.png');
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: rgba(17, 135, 246, 1);
+}
+
+@media screen and (max-width: 1200px) {
+    .bannerButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+}

@@ -1,3 +1,4 @@
+'use client';
 import logo from '@/shared/images/logo.svg';
 import { EventEmitter } from '@/shared/utils';
 import { Box, Button, Container, Drawer, Flex, Image } from '@mantine/core';
@@ -18,6 +19,16 @@ export const Header = () => {
     return () => {
       EventEmitter.off('TOGGLE_MOBILE_NAV', toggle);
     };
+  }, []);
+
+  useEffect(() => {
+    fetch(`/proxy/user`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    });
   }, []);
 
   const renderBtns = () => (

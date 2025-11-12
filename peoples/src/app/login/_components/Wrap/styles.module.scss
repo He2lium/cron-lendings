@@ -1,0 +1,32 @@
+.wrap {
+    width: 100%;
+    height: 100vh;
+    background: rgba(245, 245, 248, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 366px;
+    padding: 1.7rem;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 2rem;
+    line-height: 2rem;
+    margin-top: 3rem;
+}
+
+.desc {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: grey;
+}

@@ -1,3 +1,5 @@
+'use cilent';
+
 import { CheckboxGroup } from '@/shared/ui';
 import { Button, Chip, Group, Paper, Stack, Text, TextInput } from '@mantine/core';
 import { DatePicker, DatesProvider } from '@mantine/dates';
