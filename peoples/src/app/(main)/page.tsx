@@ -1,4 +1,4 @@
-import HomePage from './(main)/main/page';
+import HomePage from './main/page';
 
 export default function RootPage() {
   return <HomePage />;

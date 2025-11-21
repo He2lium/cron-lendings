@@ -1,0 +1,12 @@
+.nav {
+  padding-top: 15px;
+
+  > ul {
+    display: flex;
+    gap: 2rem;
+
+    a {
+      color: #222;
+    }
+  }
+}

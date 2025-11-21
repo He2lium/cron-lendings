@@ -1,0 +1,36 @@
+.itemsHeadings {
+    font-weight: 700;
+    display: flex;
+    width: 850px;
+    margin: 5rem auto 1.5rem auto;
+    
+    > p {
+        text-align: left;
+
+        &:first-child {
+            width: 27.1rem;
+        }
+    }
+}
+
+.itemText{
+    font-size: .875rem;
+    letter-spacing: -0.5px;
+    margin-top: 0.5rem;
+}
+
+.itemCount {
+    color: rgba(192, 192, 192, 1);
+
+    &:before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: rgba(192, 192, 192, 1);
+        margin-left: .3rem;
+        margin-right: .2rem;
+    }
+}

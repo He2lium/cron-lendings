@@ -1,0 +1,19 @@
+.btnMap {
+  border: 1px solid #e5e5e5;
+  border-radius: 1.25rem;
+  padding: 0.726rem 0.889rem;
+}
+
+.chip label:not([data-checked='true']) {
+  background-color: transparent;
+}
+
+.wrapper {
+  padding: 0.37rem 1.5rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 1.25rem;
+}
+
+.inputPrice {
+  width: 100px;
+}
