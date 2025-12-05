@@ -1,0 +1,31 @@
+.wrap {
+  width: 310px;
+  margin-bottom: 5rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  a {
+    border-radius: 1rem;
+  }
+
+  a[data-active] {
+    background-color: rgba(245, 245, 245, 1);
+    color: inherit;
+  }
+}
+
+.iconItem {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.iconBadge {
+  position: absolute;
+  top: -5;
+  right: -5;
+}

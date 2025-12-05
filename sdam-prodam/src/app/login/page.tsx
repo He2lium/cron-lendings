@@ -12,8 +12,10 @@ export default function LoginPage() {
   useWebSocket();
 
   return (
-    <Box bg='rgba(245, 245, 248, 1)' h='100vh'>
-      {mode === 'qr' ? <LoginQR /> : <LoginTG />}
-    </Box>
+    <>
+      <Box bg='rgba(245, 245, 248, 1)' h='100vh'>
+        {mode === 'qr' ? <LoginQR /> : <LoginTG />}
+      </Box>
+    </>
   );
 }

@@ -21,7 +21,9 @@ body {
   height: 100%;
 }
 
-p {
+a,
+p,
+button {
   font-weight: 500;
 }
 

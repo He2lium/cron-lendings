@@ -1,6 +1,5 @@
 import { Button, Stack, Text, TextInput } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Mode, useModeStore, useStepStore } from '../store';
 import styles from './Wrap/styles.module.scss';
@@ -41,16 +40,6 @@ export const Form = () => {
       router.push('/');
     }
   };
-
-  useEffect(() => {
-    fetch(`/proxy/user`, {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    });
-  }, []);
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>

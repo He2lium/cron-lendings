@@ -1,0 +1,46 @@
+.textareaWrap {
+  position: relative;
+
+  textarea {
+    outline: none;
+  }
+}
+
+.textareaButtonWrap {
+  padding: 1rem;
+  background-color: var(--mantine-color-gray-1);
+  border-radius: 0 0 1rem 1rem;
+  margin-top: -1rem;
+  //   position: absolute;
+  //   bottom: 15;
+  //   left: 15;
+}
+
+.imageBlock {
+  position: relative;
+
+  img {
+    display: block;
+  }
+}
+
+.addImage {
+  width: 200px;
+  height: 200px;
+  background: rgba(232, 245, 255, 1);
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.deleteIcon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.label {
+  font-size: 0.85rem;
+}

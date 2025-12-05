@@ -1,0 +1,28 @@
+.nav {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.topHeader {
+  background: rgba(245, 245, 245, 1);
+  padding: 1rem 0;
+
+  a {
+    color: rgba(33, 33, 33, 1);
+    font-size: 0.9rem;
+  }
+}
+
+.searchWrap {
+  display: flex;
+  align-items: center;
+  background: rgba(245, 245, 245, 1);
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  border-radius: 1rem;
+  gap: 10px;
+  flex: 1;
+}
+
+.searchInput {
+  flex: 1;
+}

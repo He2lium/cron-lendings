@@ -1,0 +1,77 @@
+.items {
+  gap: 20px;
+  padding: 100px 0;
+
+  > div {
+    height: 600px;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+
+    @media screen and (max-width: 1200px) {
+      height: 300px;
+    }
+
+    > p:last-child {
+      letter-spacing: -0.1px;
+    }
+
+    &:nth-child(1) {
+      background-image: url('./images/phone.png');
+      background-position: center bottom;
+      background-size: 80%;
+      background-color: #fbfbfb;
+    }
+
+    &:nth-child(2) {
+      background-image: url('./images/peoples.png');
+      background-size: 100%;
+    }
+
+    &:nth-child(3) {
+      background-image: url('./images/img3.png');
+      background-size: 100%;
+      background-position: 100% 85%;
+      background-color: #fbfbfb;
+    }
+
+    &:nth-child(4) {
+      background-image: url('./images/img4.png');
+      background-size: 100%;
+      background-position: 100% 100%;
+      background-color: rgba(251, 251, 251, 1);
+    }
+
+    &:nth-child(5) {
+      background-image: url('./images/img5.png');
+      background-position: center bottom;
+      background-size: 80%;
+      background-color: #fbfbfb;
+    }
+
+    &:nth-child(6) {
+      background-image: url('./images/img6.png');
+      background-size: 100%;
+      background-position: 100% 100%;
+      background-color: var(--mantine-primary-color-filled);
+
+      > h3,
+      p {
+        color: #fff;
+      }
+    }
+
+    > p {
+      &:last-child {
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    button {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+    }
+  }
+}

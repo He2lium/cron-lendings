@@ -1,3 +1,4 @@
+import { BottomBanner } from './_components/BottomBanner/BottomBanner';
 import { FlatItems } from './_components/FlatItems/FlatItems';
 import { TitleBanner } from './_components/TitleBanner/TitleBanner';
 
@@ -11,7 +12,7 @@ export default function HomePage() {
           banner={{
             title: 'Подбор новостроек',
             href: '#',
-            img: "url('/townhouse2.png')",
+            img: 'url("/townhouse2.png")',
             btnText: 'Подробнее',
           }}
         />
@@ -20,7 +21,7 @@ export default function HomePage() {
           banner={{
             title: 'Оцените вашу квартиру',
             href: '#',
-            img: "url('/townhouse2.png')",
+            img: 'url("/townhouse2.png")',
             btnText: 'Подробнее',
           }}
         />
@@ -29,12 +30,13 @@ export default function HomePage() {
           banner={{
             title: 'Сдать квартиру просто',
             href: '#',
-            img: "url('/townhouse2.png')",
+            img: 'url("/townhouse2.png")',
             btnText: 'Разместить',
           }}
           reversed
         />
       </div>
+      <BottomBanner />
     </>
   );
 }

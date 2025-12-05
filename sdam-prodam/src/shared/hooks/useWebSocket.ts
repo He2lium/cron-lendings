@@ -1,8 +1,8 @@
+import { authByTokenFx } from '@/entities/user/model/effects';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { create } from 'zustand';
-import { api } from '../services/api/api';
 
 export const useWSStore = create<{
   socket: Socket | null;
@@ -37,19 +37,11 @@ export const useWebSocket = () => {
       });
 
       socketInstance.on('auth_token', async (token: string) => {
-        // const params = {
-        //   method: 'post',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     Accept: 'application/json',
-        //   },
-        //   body: JSON.stringify({ token }),
-        // };
+        authByTokenFx({ token });
 
-        await api.post(`/proxy/auth/by-token`, { json: { token } });
-
-        r.push('/');
+        r.push('/account');
       });
+
       setSocket(socketInstance);
     }
   }, []);

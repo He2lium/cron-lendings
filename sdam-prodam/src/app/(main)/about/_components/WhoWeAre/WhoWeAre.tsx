@@ -19,7 +19,7 @@ export const WhoWeAre = () => (
             <IconListSearch width={50} height={50} stroke={1} />
           </Paper>
           <Text className={styles.text}>Всё в одном месте</Text>
-          <Text>
+          <Text c={'rgba(0,0,0,0.5)'}>
             Квартиры, дома, коммерция, аренда — легко искать, просто фильтровать
           </Text>
         </div>
@@ -32,7 +32,7 @@ export const WhoWeAre = () => (
             <IconShield width={50} height={50} stroke={1} color='#fff' />
           </Paper>
           <Text className={styles.text}>Безопасные сделки с ЦРОН</Text>
-          <Text>
+          <Text c={'rgba(0,0,0,0.5)'}>
             Мы создали ЦРОН — это безопасные офисы, где можно подписывать документы,
             проводить расчёты и консультироваться с юристами
           </Text>
@@ -42,7 +42,7 @@ export const WhoWeAre = () => (
             <IconChecks width={50} height={50} stroke={1} />
           </Paper>
           <Text className={styles.text}>Проверенные объявления</Text>
-          <Text>
+          <Text c={'rgba(0,0,0,0.5)'}>
             Работаем с агентами и собственниками, регулярно модерируем и проверяем
             объявления
           </Text>

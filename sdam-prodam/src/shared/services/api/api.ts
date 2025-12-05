@@ -1,7 +1,7 @@
 import ky from 'ky';
 
 export const api = ky.extend({
-  timeout: 5000,
+  timeout: 10000,
   retry: {
     limit: 3,
     retryOnTimeout: true,

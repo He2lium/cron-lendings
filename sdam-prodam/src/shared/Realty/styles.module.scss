@@ -1,0 +1,27 @@
+.num {
+  color: rgba(142, 142, 142, 1);
+  background: #fff;
+  padding: 0 0.5rem;
+  position: absolute;
+  bottom: 15;
+  left: 10px;
+  border-radius: 1rem;
+}
+
+.imageBlock {
+  position: relative;
+}
+
+.checkbox {
+  position: absolute;
+  top: 10;
+  left: 10px;
+}
+
+.pint {
+  padding: 0 0.5rem;
+  border-radius: 1rem;
+  background: rgba(245, 245, 245, 1);
+  color: rgba(142, 142, 142, 1);
+  font-size: 0.9rem;
+}
