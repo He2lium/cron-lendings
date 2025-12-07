@@ -1,4 +1,5 @@
 'use client';
+
 import logo from '@/shared/images/sdamprodam_logo.png';
 import styles from './styles.module.scss';
 
@@ -84,7 +85,11 @@ export const AuthedHeader = () => {
                       </Group>
                     </UnstyledButton>
                   </Menu.Target>
-                  <Menu.Dropdown>text</Menu.Dropdown>
+                  <Menu.Dropdown p={'0.5rem'}>
+                    <Button variant='subtle' color='red'>
+                      Выйти
+                    </Button>
+                  </Menu.Dropdown>
                 </Menu>
                 <Button fw={500} radius='lg'>
                   Разместить объект/арендатора

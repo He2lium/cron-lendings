@@ -1,0 +1,15 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+
+  a {
+    border-radius: 1rem;
+  }
+
+  a[data-active] {
+    background-color: rgba(245, 245, 245, 1);
+    color: inherit;
+  }
+}
