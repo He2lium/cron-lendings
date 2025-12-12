@@ -37,7 +37,7 @@ export const Form = () => {
       setStep(1);
     } else {
       await fetch(`/proxy/auth/by-code`, params);
-      router.push('/');
+      router.push('/account');
     }
   };
 

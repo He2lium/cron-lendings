@@ -37,7 +37,7 @@ export const useWebSocket = () => {
       });
 
       socketInstance.on('auth_token', async (token: string) => {
-        authByTokenFx({ token });
+        await authByTokenFx({ token });
 
         r.push('/account');
       });

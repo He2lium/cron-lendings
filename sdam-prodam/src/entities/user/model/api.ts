@@ -10,3 +10,8 @@ export const authByToken = async (json: AnyObject) => {
   const response = await api.post('/proxy/auth/by-token', { json });
   return response.json();
 };
+
+export const logout = async () => {
+  const response = await api.post('/proxy/auth/logout');
+  return response.json();
+};

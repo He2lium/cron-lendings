@@ -3,6 +3,7 @@
 import logo from '@/shared/images/sdamprodam_logo.png';
 import styles from './styles.module.scss';
 
+import { logoutEv } from '@/entities/user/model/events';
 import {
   ActionIcon,
   Avatar,
@@ -28,10 +29,12 @@ import {
 } from '@tabler/icons-react';
 import NextImage from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export const AuthedHeader = () => {
   const isMobile = useMediaQuery('(max-width: 767px');
   const [opened, { close }] = useDisclosure(false);
+  const router = useRouter();
 
   return (
     <>
@@ -86,12 +89,25 @@ export const AuthedHeader = () => {
                     </UnstyledButton>
                   </Menu.Target>
                   <Menu.Dropdown p={'0.5rem'}>
-                    <Button variant='subtle' color='red'>
+                    <Button
+                      variant='subtle'
+                      color='red'
+                      onClick={() => {
+                        logoutEv();
+                        router.push('/');
+                      }}
+                    >
                       Выйти
                     </Button>
                   </Menu.Dropdown>
                 </Menu>
-                <Button fw={500} radius='lg'>
+                <Button
+                  fw={500}
+                  radius='lg'
+                  component={Link}
+                  c='#fff'
+                  href='/account/realty/create'
+                >
                   Разместить объект/арендатора
                 </Button>
               </Group>

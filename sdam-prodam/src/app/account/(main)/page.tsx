@@ -1,6 +1,6 @@
 'use client';
 import { fetchRealties } from '@/entities/realty/model/api';
-import { Realty } from '@/shared/Realty/Realty';
+import { Realty } from '@/shared/ui/Realty/Realty';
 import { Stack, Text } from '@mantine/core';
 import { useEffect } from 'react';
 import { Filters } from './_components/Filters/Filters';
@@ -8,7 +8,6 @@ import { Stat } from './_components/Stat/Stat';
 
 export default function AccountPage() {
   useEffect(() => {
-    console.log(1);
     fetchRealties({
       pathParams: {
         realtyType: 'commercial',

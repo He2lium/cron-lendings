@@ -1,39 +1,69 @@
+'use client';
 import { MainSidebar } from '@/widgets/main-sidebar/MainSidebar';
-import { Box, Button, Container, Group, Stack } from '@mantine/core';
+import { Box, Button, Container, Group, Modal, Stack, TextInput } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { IconPlus, IconUpload } from '@tabler/icons-react';
+import { FMItem } from './_components/FMItem/FMItem';
 
 export default function FileManagerPage() {
-  const a = 1;
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
-    <Box mt={'2rem'} mb={'2rem'}>
-      <Container size={1200}>
-        <Group gap={'1.25rem'} justify='space-between' align='flex-start'>
-          <MainSidebar
-            title='Диск'
-            subtitle={
-              <Stack gap={5}>
-                <Button
-                  fw={500}
-                  radius={'lg'}
-                  leftSection={<IconUpload stroke={1} size={18} />}
-                >
-                  Загрузить
-                </Button>
-                <Button
-                  fw={500}
-                  radius={'lg'}
-                  variant='light'
-                  leftSection={<IconPlus stroke={1} size={18} />}
-                >
-                  Создать папку
-                </Button>
-              </Stack>
-            }
-          />
-          <Box flex={1}>Content</Box>
-        </Group>
-      </Container>
-    </Box>
+    <>
+      <Box mt={'2rem'} mb={'2rem'}>
+        <Container size={1200}>
+          <Group gap={'1.25rem'} justify='space-between' align='flex-start'>
+            <MainSidebar
+              title='Диск'
+              subtitle={
+                <Stack gap={5}>
+                  <Button
+                    fw={500}
+                    radius={'lg'}
+                    leftSection={<IconUpload stroke={1} size={18} />}
+                  >
+                    Загрузить
+                  </Button>
+                  <Button
+                    fw={500}
+                    radius={'lg'}
+                    variant='light'
+                    leftSection={<IconPlus stroke={1} size={18} />}
+                    onClick={open}
+                  >
+                    Создать папку
+                  </Button>
+                </Stack>
+              }
+            />
+            <Box flex={1}>
+              <Group gap={'auto'}>
+                <FMItem title='Длинное название папки' />
+                <FMItem title='название папки' />
+                <FMItem title='название папки' />
+              </Group>
+            </Box>
+          </Group>
+        </Container>
+        <Modal
+          opened={opened}
+          onClose={close}
+          title='Укажите название папки'
+          radius={'lg'}
+        >
+          <form action='#'>
+            <TextInput placeholder='Название папки' radius={'xl'} />
+            <Group mt={'1rem'}>
+              <Button variant='light' color='gray' radius='lg' flex={1}>
+                Отмена
+              </Button>
+              <Button radius='lg' flex={1}>
+                Сохранить
+              </Button>
+            </Group>
+          </form>
+        </Modal>
+      </Box>
+    </>
   );
 }

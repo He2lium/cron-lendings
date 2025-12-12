@@ -62,7 +62,7 @@ export const NotAuthedHeader = () => {
       >
         Разместить объявление
       </Button>
-      <Button variant='light' radius='xl' fw={400}>
+      <Button variant='light' radius='xl' fw={400} component={Link} href='/login'>
         Войти
       </Button>
     </Group>

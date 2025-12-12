@@ -1,8 +1,11 @@
+'use client';
+import { $authStore } from '@/entities/user/model/store';
+import { useUnit } from 'effector-react';
 import { AuthedHeader } from './components/AuthedHeader/AuthedHeader';
 import { NotAuthedHeader } from './components/NotAuthedHeader/NotAuthedHeader';
 
 export const Header = () => {
-  const isAuthed = true;
+  const user = useUnit($authStore);
 
-  return <>{isAuthed ? <AuthedHeader /> : <NotAuthedHeader />}</>;
+  return <>{user ? <AuthedHeader /> : <NotAuthedHeader />}</>;
 };

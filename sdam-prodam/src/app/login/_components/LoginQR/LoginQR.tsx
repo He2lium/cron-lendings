@@ -7,7 +7,7 @@ import styles from '../Wrap/styles.module.scss';
 
 export const LoginQR = () => {
   const socket = useWebSocket();
-  console.log(socket?.id);
+
   const LINK = `https://t.me/cron_sp_bot?start=auth=${socket?.id}`;
 
   return (

@@ -1,0 +1,11 @@
+.folder {
+  transition: all 0.4s;
+  width: 105px;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+
+  &:hover {
+    background: #f4f4f6;
+    cursor: pointer;
+  }
+}

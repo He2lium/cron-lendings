@@ -1,6 +1,8 @@
 'use client';
 import { generateRealtyDescFx } from '@/entities/realty/model/effects';
 import { $genereatedResponse } from '@/entities/realty/model/store';
+import { api } from '@/shared/services/api/api';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   ActionIcon,
   Button,
@@ -12,7 +14,7 @@ import {
   Textarea,
   TextInput,
 } from '@mantine/core';
-import { useYMaps } from '@pbe/react-yandex-maps';
+import { useThrottledCallback } from '@mantine/hooks';
 import {
   IconChartBubbleFilled,
   IconChevronDown,
@@ -21,23 +23,30 @@ import {
 } from '@tabler/icons-react';
 import { useUnit } from 'effector-react';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Controller, useForm, useWatch } from 'react-hook-form';
+import { Map } from '../../../../../../shared/ui/map/Map';
+import schema from './schema';
 import styles from './styles.module.scss';
 
 export const CreateRealtyForm = () => {
-  const mapRef = useRef(null);
-  const ymaps = useYMaps(['Map']);
-  const [generatedResponseS, generatingResponse] = useUnit([
+  const [addrs, setAddrs] = useState<any[]>([]);
+  const [geo, setGeo] = useState<{ center: number[]; zoom: number }>({
+    center: [55.76, 37.64],
+    zoom: 10,
+  });
+  const [searchValue, setSearchValue] = useState('');
+  const [generatedResponse, generatingResponse] = useUnit([
     $genereatedResponse,
     generateRealtyDescFx.pending,
   ]);
-  const form = useForm<any>();
+  const form = useForm<any>({ mode: 'onChange', resolver: yupResolver(schema) });
+  const description = useWatch({ name: 'description', control: form.control });
 
   const handleGenereateResponse = () => {
     generateRealtyDescFx({
       pathParams: { realtyType: 'commercial' },
-      description: 'Продажа дома в центре Москвы',
+      description,
     });
   };
 
@@ -45,22 +54,58 @@ export const CreateRealtyForm = () => {
     console.log(values);
   };
 
-  useEffect(() => {
-    if (!ymaps || !mapRef.current) {
-      return;
-    }
+  const handleSearchAddress = useThrottledCallback(async () => {
+    if (searchValue) {
+      const r: any = await api
+        .get(
+          `https://suggest-maps.yandex.ru/v1/suggest?apikey=a7d42e70-610f-4ae5-94bb-e65f262cb898&text=${searchValue}`
+        )
+        .json();
 
-    new ymaps.Map(mapRef.current, {
-      center: [55.76, 37.64],
-      zoom: 10,
-    });
-  }, [ymaps]);
+      if (r.results?.length) {
+        setAddrs(
+          r.results.map((res) => {
+            const label = res.subtitle
+              ? `${res.subtitle.text}, ${res.title.text}`
+              : res.title.text;
+
+            return {
+              label,
+              value: `${label}${res.tags[0]}`,
+            };
+          })
+        );
+      }
+    }
+  }, 600);
+
+  const handleFetchGeoCode = async (v: string) => {
+    const r: any = await api
+      .get(
+        `https://geocode-maps.yandex.ru/v1/?apikey=9e6e112e-b3e5-4572-a0ce-55ad203d26c6&results=1&format=json&geocode=${v}`
+      )
+      .json();
+    const pos =
+      r.response.GeoObjectCollection.featureMember?.[0]?.GeoObject?.Point.pos.split(' ');
+
+    if (pos) {
+      setGeo((g) => ({ ...g, center: [+pos[1], +pos[0]], zoom: 15 }));
+    }
+  };
 
   useEffect(() => {
-    if (generatedResponseS) {
-      form.setValue('description', generatedResponseS);
+    handleSearchAddress();
+  }, [searchValue]);
+
+  useEffect(() => {
+    if (generatedResponse) {
+      form.setValue('description', generatedResponse);
     }
-  }, [generatedResponseS]);
+  }, [generatedResponse]);
+
+  useEffect(() => {
+    form.trigger();
+  }, []);
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -143,7 +188,7 @@ export const CreateRealtyForm = () => {
               />
             )}
             control={form.control}
-            name='realtyType'
+            name='cadastralNumber'
           />
         </Group>
         <Group>
@@ -218,7 +263,7 @@ export const CreateRealtyForm = () => {
           />
         </Group>
         <Text fz={'1.2rem'}>Информация о здании</Text>
-        <Group>
+        <Group align='flex-start'>
           <Controller
             render={({ field }) => (
               <Select
@@ -242,10 +287,11 @@ export const CreateRealtyForm = () => {
                 radius='xl'
                 label='Год постройки'
                 flex={1}
+                error={form.formState.errors.buildingYear?.message as any}
               />
             )}
             control={form.control}
-            name='realtyType'
+            name='buildingYear'
           />
           <Controller
             render={({ field }) => (
@@ -279,15 +325,22 @@ export const CreateRealtyForm = () => {
             name='realtyType'
           />
         </Group>
-        <Controller
-          render={({ field }) => (
-            <TextInput {...field} variant='filled' radius='xl' label='Адрес' flex={1} />
-          )}
-          control={form.control}
-          name='realtyType'
+        <Select
+          label='Адрес'
+          variant='filled'
+          data={addrs}
+          radius={'xl'}
+          flex={1}
+          searchable
+          onSearchChange={setSearchValue}
+          onChange={(_, s) => {
+            handleFetchGeoCode(s.label);
+            console.log(s);
+          }}
+          searchValue={searchValue}
+          rightSection={<IconChevronDown size={18} color='black' stroke={1} />}
         />
-
-        {/* <div ref={mapRef} style={{ width: '100%', height: '240px' }} /> */}
+        <Map {...geo} />
         <Text fz={'1.2rem'}>Контактная информация</Text>
         <Group>
           <Controller
@@ -334,12 +387,12 @@ export const CreateRealtyForm = () => {
               minRows={6}
               maxRows={6}
               disabled={generatingResponse}
+              // error={form.formState.errors.description?.message as any}
             />
           )}
           control={form.control}
           name='description'
         />
-
         <div className={styles.textareaButtonWrap}>
           <Button
             radius={'xl'}
@@ -415,10 +468,16 @@ export const CreateRealtyForm = () => {
           </div>
         </Group>
         <Group mt={'2rem'}>
-          <Button radius={'xl'} size='md' fw={500}>
+          <Button radius={'xl'} size='md' fw={500} disabled={!form.formState.isValid}>
             Опубликовать
           </Button>
-          <Button radius={'xl'} size='md' fw={500} variant='light'>
+          <Button
+            radius={'xl'}
+            size='md'
+            fw={500}
+            variant='light'
+            disabled={!form.formState.isValid}
+          >
             Сохранить черновик
           </Button>
         </Group>
