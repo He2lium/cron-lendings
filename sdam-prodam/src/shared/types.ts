@@ -12,7 +12,7 @@ export interface BaseListResponse<T> {
 }
 
 export interface InterestPoint {
-  city_id: string;
+  city: string;
   district: string;
   street: string;
   house_number: string;

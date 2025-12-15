@@ -1,4 +1,6 @@
-import { ActionIcon, Checkbox, Group, Stack, Text } from '@mantine/core';
+import { RealtyCommercial } from '@/entities/realty/model/types';
+import { TRANSLATES } from '@/shared/translates';
+import { ActionIcon, Checkbox, Group, Menu, Stack, Text } from '@mantine/core';
 import {
   IconBuilding,
   IconDotsVertical,
@@ -7,13 +9,19 @@ import {
   IconHeart,
   IconMapPin,
   IconMessage,
+  IconPencil,
   IconPhone,
+  IconTrash,
   IconUser,
 } from '@tabler/icons-react';
 import Image from 'next/image';
+import { FC } from 'react';
 import styles from './styles.module.scss';
 
-export const Realty = () => (
+interface Props {
+  data: RealtyCommercial;
+}
+export const Realty: FC<Props> = ({ data }) => (
   <Group align='stretch' justify='space-between'>
     <div className={styles.imageBlock}>
       <Image
@@ -31,7 +39,7 @@ export const Realty = () => (
       <Group gap={5}>
         <IconBuilding width={30} stroke={1} color='var(--mantine-primary-color-filled)' />
         <Text c='var(--mantine-primary-color-filled)' fw={700}>
-          Офисное помещение
+          {TRANSLATES[data.commercial_subtype]}
         </Text>
       </Group>
       <Group>
@@ -53,13 +61,13 @@ export const Realty = () => (
         </Stack>
       </Group>
       <Group>
-        <div className={styles.pint}>133.3 м²</div>
+        <div className={styles.pint}>{data.total_area} м²</div>
         <div className={styles.pint}>1-2 этажи</div>
       </Group>
       <Group gap={5} mt='auto'>
         <IconMapPin size={18} stroke={1} color='var(--mantine-primary-color-filled)' />
         <Text c='rgba(142, 142, 142, 1)' fz={'0.9rem'}>
-          ул. Котляковская, 7/4
+          {data.address.city}
         </Text>
       </Group>
     </Stack>
@@ -96,8 +104,19 @@ export const Realty = () => (
         </Group>
       </Group>
     </Stack>
-    <ActionIcon variant='filled' color='rgba(245, 245, 245, 1)' radius='50%'>
-      <IconDotsVertical width={30} stroke={1} color='rgba(142, 142, 142, 1)' />
-    </ActionIcon>
+    <Menu shadow='md' width={200}>
+      <Menu.Target>
+        <ActionIcon variant='filled' color='rgba(245, 245, 245, 1)' radius='50%'>
+          <IconDotsVertical width={30} stroke={1} color='rgba(142, 142, 142, 1)' />
+        </ActionIcon>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item leftSection={<IconPencil size={14} />}>Редактировать</Menu.Item>
+        <Menu.Item color='red' leftSection={<IconTrash size={14} />}>
+          Удалить
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
   </Group>
 );

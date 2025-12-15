@@ -1,5 +1,5 @@
 'use client';
-import { generateRealtyDescFx } from '@/entities/realty/model/effects';
+import { createRealtyFx, generateRealtyDescFx } from '@/entities/realty/model/effects';
 import { $genereatedResponse } from '@/entities/realty/model/store';
 import { api } from '@/shared/services/api/api';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,18 +9,20 @@ import {
   Checkbox,
   Group,
   Select,
+  SimpleGrid,
   Stack,
   Text,
   Textarea,
   TextInput,
 } from '@mantine/core';
-import { useThrottledCallback } from '@mantine/hooks';
+import { useFileDialog, useThrottledCallback } from '@mantine/hooks';
 import {
   IconChartBubbleFilled,
   IconChevronDown,
   IconPlus,
   IconTrash,
 } from '@tabler/icons-react';
+import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -30,7 +32,9 @@ import schema from './schema';
 import styles from './styles.module.scss';
 
 export const CreateRealtyForm = () => {
+  const [city, setCity] = useState<string | null>('Москва');
   const [addrs, setAddrs] = useState<any[]>([]);
+  const fileDialog = useFileDialog();
   const [geo, setGeo] = useState<{ center: number[]; zoom: number }>({
     center: [55.76, 37.64],
     zoom: 10,
@@ -51,6 +55,12 @@ export const CreateRealtyForm = () => {
   };
 
   const handleSubmit = (values: any) => {
+    createRealtyFx({
+      pathParams: { realtyType: 'commercial' },
+      ...values,
+      description,
+      total_area: +values.total_area,
+    });
     console.log(values);
   };
 
@@ -58,7 +68,7 @@ export const CreateRealtyForm = () => {
     if (searchValue) {
       const r: any = await api
         .get(
-          `https://suggest-maps.yandex.ru/v1/suggest?apikey=a7d42e70-610f-4ae5-94bb-e65f262cb898&text=${searchValue}`
+          `https://suggest-maps.yandex.ru/v1/suggest?apikey=a7d42e70-610f-4ae5-94bb-e65f262cb898&text=${city},${searchValue}`
         )
         .json();
 
@@ -88,6 +98,10 @@ export const CreateRealtyForm = () => {
     const pos =
       r.response.GeoObjectCollection.featureMember?.[0]?.GeoObject?.Point.pos.split(' ');
 
+    const address =
+      r.response.GeoObjectCollection.metaDataProperty.GeocoderResponseMetaData.request;
+
+    form.setValue('address.city', address);
     if (pos) {
       setGeo((g) => ({ ...g, center: [+pos[1], +pos[0]], zoom: 15 }));
     }
@@ -117,15 +131,33 @@ export const CreateRealtyForm = () => {
               {...field}
               label='Категория'
               variant='filled'
-              data={['React', 'Angular', 'Vue', 'Svelte']}
+              data={[
+                {
+                  label: 'Офис',
+                  value: 'office',
+                },
+                {
+                  label: 'Кафетерий',
+                  value: 'cafeteria',
+                },
+                {
+                  label: 'Свободное назначение',
+                  value: 'free_zone',
+                },
+                {
+                  label: 'Магазин',
+                  value: 'store',
+                },
+              ]}
               classNames={{ label: styles.label }}
+              error={form.formState.errors.commercial_subtype?.message as any}
               w={300}
               radius={'xl'}
               rightSection={<IconChevronDown size={18} color='black' stroke={1} />}
             />
           )}
           control={form.control}
-          name='realtyType'
+          name='commercial_subtype'
         />
         <Text fz={'1.2rem'}>Аренда и продажа</Text>
         <Controller
@@ -147,19 +179,17 @@ export const CreateRealtyForm = () => {
         <Group>
           <Controller
             render={({ field }) => (
-              <Select
+              <TextInput
                 {...field}
-                label='Общая площадь  м²'
                 variant='filled'
-                data={['React', 'Angular', 'Vue', 'Svelte']}
-                w={300}
-                radius={'xl'}
+                radius='xl'
+                label='Общая площадь  м²'
                 flex={1}
-                rightSection={<IconChevronDown size={18} color='black' stroke={1} />}
+                error={form.formState.errors.total_area?.message as any}
               />
             )}
             control={form.control}
-            name='realtyType'
+            name='total_area'
           />
           <Controller
             render={({ field }) => (
@@ -185,10 +215,11 @@ export const CreateRealtyForm = () => {
                 radius='xl'
                 label='Кадастровый номер'
                 flex={1}
+                error={form.formState.errors.cadastral_number?.message as any}
               />
             )}
             control={form.control}
-            name='cadastralNumber'
+            name='cadastral_number'
           />
         </Group>
         <Group>
@@ -198,7 +229,7 @@ export const CreateRealtyForm = () => {
                 {...field}
                 label='Этаж(и)'
                 variant='filled'
-                data={['React', 'Angular', 'Vue', 'Svelte']}
+                data={['1', '2', '3', 'Svelte']}
                 radius={'xl'}
                 flex={1}
                 rightSection={<IconChevronDown size={18} color='black' stroke={1} />}
@@ -287,11 +318,11 @@ export const CreateRealtyForm = () => {
                 radius='xl'
                 label='Год постройки'
                 flex={1}
-                error={form.formState.errors.buildingYear?.message as any}
+                error={form.formState.errors.building_year?.message as any}
               />
             )}
             control={form.control}
-            name='buildingYear'
+            name='building_year'
           />
           <Controller
             render={({ field }) => (
@@ -325,21 +356,50 @@ export const CreateRealtyForm = () => {
             name='realtyType'
           />
         </Group>
-        <Select
-          label='Адрес'
-          variant='filled'
-          data={addrs}
-          radius={'xl'}
-          flex={1}
-          searchable
-          onSearchChange={setSearchValue}
-          onChange={(_, s) => {
-            handleFetchGeoCode(s.label);
-            console.log(s);
-          }}
-          searchValue={searchValue}
-          rightSection={<IconChevronDown size={18} color='black' stroke={1} />}
-        />
+        <Group className={styles.addressWrap} align='flex-end' gap={0}>
+          <Select
+            label='Адрес'
+            variant='unstyled'
+            value={city}
+            onChange={setCity}
+            data={['Москва', 'Санкт-Петербург', 'Сочи']}
+            rightSection={<IconChevronDown size={18} color='black' />}
+            style={{ width: 'fit-content' }}
+            classNames={{
+              wrapper: styles.addrCityWrap,
+            }}
+            comboboxProps={{
+              width: 'auto',
+            }}
+          />
+          <Controller
+            render={({ field }) => (
+              <Select
+                {...field}
+                variant='filled'
+                data={addrs}
+                radius={'0 1rem 1rem 0'}
+                flex={1}
+                searchable
+                onSearchChange={setSearchValue}
+                placeholder='Улица'
+                onChange={(v, s) => {
+                  form.setValue('address.city', v, { shouldValidate: true });
+                  handleFetchGeoCode(s.label);
+                }}
+                searchValue={searchValue}
+                rightSection={<IconChevronDown size={18} color='black' stroke={1} />}
+              />
+            )}
+            control={form.control}
+            name='address.city'
+          />
+        </Group>
+        {form.formState.errors.address?.city?.message && (
+          <Text c={'var(--mantine-color-error)'} fz={'0.875rem'}>
+            {form.formState.errors.address?.city?.message as any}
+          </Text>
+        )}
         <Map {...geo} />
         <Text fz={'1.2rem'}>Контактная информация</Text>
         <Group>
@@ -387,13 +447,23 @@ export const CreateRealtyForm = () => {
               minRows={6}
               maxRows={6}
               disabled={generatingResponse}
-              // error={form.formState.errors.description?.message as any}
+              // className={'mantine-focus-never'}
+              error={!!form.formState.errors.description?.message as any}
+              classNames={{
+                input: cn(styles.textAreaInput, {
+                  [styles.error]: !!form.formState.errors.description?.message,
+                }),
+              }}
             />
           )}
           control={form.control}
           name='description'
         />
-        <div className={styles.textareaButtonWrap}>
+        <div
+          className={cn(styles.textareaButtonWrap, {
+            [styles.textareaError]: !!form.formState.errors.description?.message,
+          })}
+        >
           <Button
             radius={'xl'}
             fw={500}
@@ -406,69 +476,49 @@ export const CreateRealtyForm = () => {
             Сгенерировать текст с помощью YandexGPT
           </Button>
         </div>
+        {form.formState.errors.description?.message && (
+          <Text c={'var(--mantine-color-error)'} fz={'0.875rem'}>
+            {form.formState.errors.description?.message as any}
+          </Text>
+        )}
         <Text fz={'1.2rem'}>Фотографии объекта</Text>
-        <Group gap='10' justify='space-between'>
-          <div className={styles.imageBlock}>
-            <Image
-              width={200}
-              height={200}
-              quality={100}
-              alt=''
-              src='/flats.png'
-              style={{ borderRadius: '1rem' }}
-            />
-            <ActionIcon variant='white' radius={'md'} className={styles.deleteIcon}>
-              <IconTrash
-                stroke={1}
-                color='var(--mantine-primary-color-filled)'
-                size={18}
+        <SimpleGrid cols={{ base: 4 }}>
+          {Array.from(fileDialog.files || []).map((file) => (
+            <div className={styles.imageBlock} key={file.name}>
+              <Image
+                width={200}
+                height={200}
+                quality={100}
+                alt=''
+                src='/flats.png'
+                style={{ borderRadius: '1rem' }}
               />
-            </ActionIcon>
-          </div>
-          <div className={styles.imageBlock}>
-            <Image
-              width={200}
-              height={200}
-              quality={100}
-              alt=''
-              src='/flats.png'
-              style={{ borderRadius: '1rem' }}
-            />
-            <ActionIcon variant='white' radius={'md'} className={styles.deleteIcon}>
-              <IconTrash
-                stroke={1}
-                color='var(--mantine-primary-color-filled)'
-                size={18}
-              />
-            </ActionIcon>
-          </div>
-          <div className={styles.imageBlock}>
-            <Image
-              width={200}
-              height={200}
-              quality={100}
-              alt=''
-              src='/flats.png'
-              style={{ borderRadius: '1rem' }}
-            />
-            <ActionIcon variant='white' radius={'md'} className={styles.deleteIcon}>
-              <IconTrash
-                stroke={1}
-                color='var(--mantine-primary-color-filled)'
-                size={18}
-              />
-            </ActionIcon>
-          </div>
-          <div className={styles.addImage}>
+              <ActionIcon variant='white' radius={'md'} className={styles.deleteIcon}>
+                <IconTrash
+                  stroke={1}
+                  color='var(--mantine-primary-color-filled)'
+                  size={18}
+                />
+              </ActionIcon>
+            </div>
+          ))}
+
+          <div className={styles.addImage} onClick={fileDialog.open}>
             <IconPlus
               stroke={0.5}
               color='var(--mantine-primary-color-filled)'
               size={70}
             />
           </div>
-        </Group>
+        </SimpleGrid>
         <Group mt={'2rem'}>
-          <Button radius={'xl'} size='md' fw={500} disabled={!form.formState.isValid}>
+          <Button
+            radius={'xl'}
+            type='submit'
+            size='md'
+            fw={500}
+            disabled={!form.formState.isValid}
+          >
             Опубликовать
           </Button>
           <Button

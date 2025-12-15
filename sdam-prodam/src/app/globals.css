@@ -27,6 +27,10 @@ button {
   font-weight: 500;
 }
 
+.mantine-focus-never {
+  border-color: transparent; /* Optional: Resets border to default non-focus color */
+}
+
 @media screen and (max-width: 768px) {
   html {
     font-size: 12px;

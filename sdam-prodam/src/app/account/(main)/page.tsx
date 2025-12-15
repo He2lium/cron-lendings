@@ -1,14 +1,18 @@
 'use client';
-import { fetchRealties } from '@/entities/realty/model/api';
+import { fetchRealtiesFx } from '@/entities/realty/model/effects';
+import { $realties } from '@/entities/realty/model/store';
 import { Realty } from '@/shared/ui/Realty/Realty';
 import { Stack, Text } from '@mantine/core';
+import { useUnit } from 'effector-react';
 import { useEffect } from 'react';
 import { Filters } from './_components/Filters/Filters';
 import { Stat } from './_components/Stat/Stat';
 
 export default function AccountPage() {
+  const realties = useUnit($realties);
+  console.log(realties);
   useEffect(() => {
-    fetchRealties({
+    fetchRealtiesFx({
       pathParams: {
         realtyType: 'commercial',
       },
@@ -35,9 +39,9 @@ export default function AccountPage() {
         ]}
       />
       <Filters />
-      <Realty />
-      <Realty />
-      <Realty />
+      {realties?.data.map((realty) => (
+        <Realty key={realty._id} data={realty} />
+      ))}
     </Stack>
   );
 }

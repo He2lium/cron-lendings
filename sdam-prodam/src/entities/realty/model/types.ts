@@ -1,6 +1,7 @@
 import { InterestPoint } from '@/shared/types';
 
 type RealtySharedType = {
+  _id: string;
   description: string;
   address: InterestPoint;
   images?: string;
@@ -16,12 +17,12 @@ export interface RealtyApartment extends RealtySharedType {
   buildingMaterial: 'brick' | 'panel' | 'monolith' | 'wood' | 'block';
   hasPets: boolean;
   layout: 'open_plan' | 'studio' | 'separate_rooms' | 'adjacent_rooms';
-  totalArea: number;
+  total_area: number;
   condition: RealtyCondition;
   communications: RealtyCommunication[];
   highVoltagePower: boolean;
-  cadastralNumber: string;
-  buildingYear: string;
+  cadastral_number: string;
+  building_year: string;
   flat: {
     apartmentType: 'secondary' | 'new_building';
     rooms: number;
@@ -77,16 +78,16 @@ type RealtyCommunication = 'electricity' | 'gas' | 'water' | 'sewage';
 type RealtyCondition = 'good' | 'requires_renovation' | 'needs_renovation';
 
 export interface RealtyCommercial extends RealtySharedType {
-  commercialSubtype: 'office' | 'cafeteria' | 'free_zone' | 'store';
+  commercial_subtype: 'office' | 'cafeteria' | 'free_zone' | 'store';
   wetPoints?: boolean;
   maxElectricalLoad?: number;
   hasParking?: boolean;
-  totalArea: number;
+  total_area: number;
   condition?: RealtyCondition;
   communications?: RealtyCommunication[];
   highVoltagePower?: boolean;
-  cadastralNumber: string;
-  buildingYear: string;
+  cadastral_number: string;
+  building_year: string;
   office?: {
     layoutType: 'open_plan' | 'partitioned' | 'individual';
     buildingClass: 'class_a' | 'class_b' | 'class_c';

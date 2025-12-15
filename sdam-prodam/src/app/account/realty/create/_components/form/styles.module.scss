@@ -10,10 +10,25 @@
   padding: 1rem;
   background-color: var(--mantine-color-gray-1);
   border-radius: 0 0 1rem 1rem;
+  border: 1px solid transparent;
+  border-top: 0;
   margin-top: -1rem;
+
+  &.textareaError {
+    border-color: var(--mantine-color-error);
+  }
   //   position: absolute;
   //   bottom: 15;
   //   left: 15;
+}
+
+.textAreaInput {
+  border-color: transparent;
+  border-bottom: none;
+
+  &.error {
+    border-color: var(--mantine-color-error);
+  }
 }
 
 .imageBlock {
@@ -43,4 +58,14 @@
 
 .label {
   font-size: 0.85rem;
+}
+
+.addrCityWrap {
+  background: var(--mantine-color-gray-1);
+  padding-left: 1rem;
+  border-radius: 1rem 0 0 1rem;
+}
+
+.textarea {
+  border-bottom: 0;
 }
