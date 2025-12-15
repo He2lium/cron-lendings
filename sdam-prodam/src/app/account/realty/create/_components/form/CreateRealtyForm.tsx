@@ -1,7 +1,9 @@
 'use client';
+import { createImage } from '@/entities/file-image/model/api';
 import { createRealtyFx, generateRealtyDescFx } from '@/entities/realty/model/effects';
 import { $genereatedResponse } from '@/entities/realty/model/store';
 import { api } from '@/shared/services/api/api';
+import { fileToBinary } from '@/shared/utils/fileToBinary';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   ActionIcon,
@@ -120,6 +122,17 @@ export const CreateRealtyForm = () => {
   useEffect(() => {
     form.trigger();
   }, []);
+
+  useEffect(() => {
+    const load = async () => {
+      Array.from(fileDialog.files || []).forEach(async (file) => {
+        const body = await fileToBinary(file);
+
+        createImage(body);
+      });
+    };
+    load();
+  }, [fileDialog.files]);
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>

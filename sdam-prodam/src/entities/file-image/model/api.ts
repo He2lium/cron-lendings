@@ -8,8 +8,8 @@ export const getImages = async (): Promise<BaseListResponse<Image>> => {
   return response.json();
 };
 
-export const createImage = async (json: AnyObject) => {
-  const response = await api.put('/proxy/file/image/upload', json);
+export const createImage = async (body: any) => {
+  const response = await api.put('/proxy/file/image/upload', { body });
   return response.json();
 };
 
