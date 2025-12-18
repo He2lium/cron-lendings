@@ -1,6 +1,8 @@
 import { createTheme, MantineProvider, Stack } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 import { Rubik } from 'next/font/google';
 import './globals.css';
 
@@ -61,6 +63,7 @@ export default function RootLayout({
           <Stack h='100%' gap={0}>
             {children}
           </Stack>
+          <Notifications />
         </MantineProvider>
       </body>
     </html>

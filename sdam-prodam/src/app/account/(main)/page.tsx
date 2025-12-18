@@ -10,7 +10,7 @@ import { Stat } from './_components/Stat/Stat';
 
 export default function AccountPage() {
   const realties = useUnit($realties);
-  console.log(realties);
+
   useEffect(() => {
     fetchRealtiesFx({
       pathParams: {
@@ -20,7 +20,7 @@ export default function AccountPage() {
   }, []);
 
   return (
-    <Stack gap={20}>
+    <Stack gap={20} mb='5rem'>
       <Text fz={'2.2rem'}>Ваши объявления</Text>
       <Stat
         stats={[

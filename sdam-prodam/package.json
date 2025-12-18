@@ -15,6 +15,7 @@
     "@mantine/core": "^8.3.8",
     "@mantine/dates": "^8.3.8",
     "@mantine/hooks": "^8.3.8",
+    "@mantine/notifications": "^8.3.10",
     "@tabler/icons-react": "^3.35.0",
     "classnames": "^2.5.1",
     "effector": "^23.4.4",

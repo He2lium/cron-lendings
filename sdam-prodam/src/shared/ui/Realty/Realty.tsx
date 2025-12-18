@@ -1,5 +1,6 @@
 import { RealtyCommercial } from '@/entities/realty/model/types';
 import { TRANSLATES } from '@/shared/translates';
+import { cropTextAtMiddle } from '@/shared/utils/truncateTextAtMiddle';
 import { ActionIcon, Checkbox, Group, Menu, Stack, Text } from '@mantine/core';
 import {
   IconBuilding,
@@ -62,12 +63,18 @@ export const Realty: FC<Props> = ({ data }) => (
       </Group>
       <Group>
         <div className={styles.pint}>{data.total_area} м²</div>
-        <div className={styles.pint}>1-2 этажи</div>
+        {data.address.floor && (
+          <div className={styles.pint}>{data.address.floor} этаж</div>
+        )}
       </Group>
       <Group gap={5} mt='auto'>
         <IconMapPin size={18} stroke={1} color='var(--mantine-primary-color-filled)' />
         <Text c='rgba(142, 142, 142, 1)' fz={'0.9rem'}>
-          {data.address.city}
+          {cropTextAtMiddle(
+            `${data.address.city}, ${data.address.street}, ${data.address.house_number}`,
+            0,
+            30
+          )}
         </Text>
       </Group>
     </Stack>
