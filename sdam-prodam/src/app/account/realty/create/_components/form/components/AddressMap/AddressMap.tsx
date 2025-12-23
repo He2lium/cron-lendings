@@ -21,13 +21,12 @@ export const AddressMap = ({ city, onCityChange }: any) => {
 
   const handleFetchGeoCode = async (v: string) => {
     const r: any = await api
-      .get(
-        `https://geocode-maps.yandex.ru/v1/?apikey=9e6e112e-b3e5-4572-a0ce-55ad203d26c6&results=1&print_address=1&format=json&geocode=${v}`
-      )
+      .get('/geocode-maps', {
+        searchParams: { geocode: v, results: 1, print_address: 1, format: 'json' },
+      })
       .json();
     const go = r.response.GeoObjectCollection.featureMember?.[0]?.GeoObject;
     const pos = go?.Point.pos.split(' ');
-
     const ad = go?.metaDataProperty.GeocoderMetaData.Address.Components.reduce(
       (acc: AnyObject, curr: AnyObject) =>
         addressKinds.has(curr.kind)
@@ -51,9 +50,12 @@ export const AddressMap = ({ city, onCityChange }: any) => {
   const handleSearchAddress = useThrottledCallback(async () => {
     if (searchValue) {
       const r: any = await api
-        .get(
-          `https://suggest-maps.yandex.ru/v1/suggest?apikey=a7d42e70-610f-4ae5-94bb-e65f262cb898&types=street,house,area,province&text=${city},${searchValue}`
-        )
+        .get(`/suggest-maps`, {
+          searchParams: {
+            text: `${city},${searchValue}`,
+            types: 'street,house,area,province',
+          },
+        })
         .json();
 
       if (r.results?.length) {
