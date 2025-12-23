@@ -15,3 +15,8 @@ export const logout = async () => {
   const response = await api.post('/proxy/auth/logout');
   return response.json();
 };
+
+export const updateUser = async (json: AnyObject) => {
+  const response = await api.patch('/proxy/user', { json });
+  return response.json();
+};

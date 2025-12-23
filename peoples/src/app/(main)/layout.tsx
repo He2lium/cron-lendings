@@ -1,3 +1,4 @@
+import { EventsProvider } from '@/providers/EventsProvider';
 import { Footer, Header } from '@/widgets';
 import { ReactNode } from 'react';
 
@@ -7,6 +8,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Header />
       {children}
       <Footer />
+      <EventsProvider />
     </>
   );
 }
