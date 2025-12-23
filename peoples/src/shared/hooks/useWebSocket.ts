@@ -4,7 +4,7 @@ import io, { Socket } from 'socket.io-client';
 import { create } from 'zustand';
 import { api } from '../services/api/api';
 
-export const useWSStore = create<{
+const useWSStore = create<{
   socket: Socket | null;
   setSocket: (socket: Socket) => void;
 }>()((set) => ({
@@ -23,9 +23,6 @@ export const useWebSocket = () => {
         upgrade: false,
         reconnectionAttempts: 3,
         reconnectionDelay: 1000,
-        //   query: {
-        //     uid: user.id,
-        //   },
       });
 
       socketInstance.on('connect', () => {
@@ -37,15 +34,6 @@ export const useWebSocket = () => {
       });
 
       socketInstance.on('auth_token', async (token: string) => {
-        // const params = {
-        //   method: 'post',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     Accept: 'application/json',
-        //   },
-        //   body: JSON.stringify({ token }),
-        // };
-
         await api.post(`/proxy/auth/by-token`, { json: { token } });
 
         r.push('/');
