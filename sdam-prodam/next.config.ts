@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/proxy/:path*',
-        destination: process.env.NEXT_PUBLIC_API_PATH + '/:path*',
+        destination: process.env.PROXY_API_PATH + '/:path*',
       },
     ];
   },
