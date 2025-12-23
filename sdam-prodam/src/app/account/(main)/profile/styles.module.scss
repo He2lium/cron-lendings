@@ -1,0 +1,24 @@
+.inputWrap {
+  background: rgba(245, 245, 245, 1);
+  border-radius: 1rem;
+  padding: 0 1rem;
+
+  input {
+    width: 200;
+  }
+}
+
+.avatarWrap {
+  position: relative;
+  margin-left: 10rem;
+}
+
+.avatarEditIcon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: rgba(245, 245, 245, 1);
+  line-height: 100%;
+  padding: 0.25rem;
+  border-radius: 50%;
+}

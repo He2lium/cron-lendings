@@ -1,4 +1,5 @@
 import { api } from '@/shared/services/api/api';
+import { AnyObject } from '@/shared/types';
 import { Map } from '@/shared/ui/map/Map';
 import { Group, Select, Text } from '@mantine/core';
 import { useThrottledCallback } from '@mantine/hooks';
@@ -28,7 +29,7 @@ export const AddressMap = ({ city, onCityChange }: any) => {
     const pos = go?.Point.pos.split(' ');
 
     const ad = go?.metaDataProperty.GeocoderMetaData.Address.Components.reduce(
-      (acc, curr) =>
+      (acc: AnyObject, curr: AnyObject) =>
         addressKinds.has(curr.kind)
           ? {
               ...acc,
@@ -57,7 +58,7 @@ export const AddressMap = ({ city, onCityChange }: any) => {
 
       if (r.results?.length) {
         setAddrs(
-          r.results.map((res) => {
+          r.results.map((res: any) => {
             const label = res.title.text;
 
             return {
@@ -73,7 +74,7 @@ export const AddressMap = ({ city, onCityChange }: any) => {
   useEffect(() => {
     handleSearchAddress();
   }, [searchValue]);
-  console.log(addrs);
+
   return (
     <>
       <Group className={styles.addressWrap} align='flex-end' gap={0}>
@@ -108,9 +109,9 @@ export const AddressMap = ({ city, onCityChange }: any) => {
           rightSection={<IconChevronDown size={18} color='black' stroke={1} />}
         />
       </Group>
-      {form.formState.errors.address?.city?.message && (
+      {(form.formState.errors.address as any)?.city?.message && (
         <Text c={'var(--mantine-color-error)'} fz={'0.875rem'}>
-          {form.formState.errors.address?.city?.message as any}
+          {(form.formState.errors.address as any)?.city?.message as any}
         </Text>
       )}
       <Map {...geo} />

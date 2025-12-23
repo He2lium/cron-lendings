@@ -4,6 +4,7 @@ import logo from '@/shared/images/sdamprodam_logo.png';
 import styles from './styles.module.scss';
 
 import { logoutEv } from '@/entities/user/model/events';
+import { $authStore } from '@/entities/user/model/store';
 import {
   ActionIcon,
   Avatar,
@@ -27,6 +28,7 @@ import {
   IconMapPin,
   IconMenu2,
 } from '@tabler/icons-react';
+import { useUnit } from 'effector-react';
 import NextImage from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -35,6 +37,7 @@ export const AuthedHeader = () => {
   const isMobile = useMediaQuery('(max-width: 767px');
   const [opened, { close }] = useDisclosure(false);
   const router = useRouter();
+  const user = useUnit($authStore);
 
   return (
     <>
@@ -69,16 +72,16 @@ export const AuthedHeader = () => {
                     color='rgba(192, 192, 192, 1)'
                   />
                 </ActionIcon>
-                <Link href='#'>Мои объекты</Link>
+                <Link href='/account'>Мои объекты</Link>
                 <Menu>
                   <Menu.Target>
                     <UnstyledButton>
                       <Group gap={10}>
                         <Avatar
-                          src='https://img.freepik.com/free-photo/handsome-young-man-white-t-shirt_273609-7048.jpg?semt=ais_hybrid&w=740&q=80'
+                          src={`https://storage.yandexcloud.net/sp-media/images/optimized/avatar/${user?.avatar}/md.webp`}
                           radius='xl'
                         />
-                        <Text fz={'0.9rem'}>Михаил</Text>
+                        <Text fz={'0.9rem'}>{user?.name}</Text>
                         <IconChevronDown
                           color='rgba(33, 33, 33, 1)'
                           stroke={1}
