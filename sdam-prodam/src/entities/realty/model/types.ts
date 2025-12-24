@@ -4,7 +4,7 @@ type RealtySharedType = {
   _id: string;
   description: string;
   address: InterestPoint;
-  images?: string;
+  images?: string[];
   docs?: string;
 };
 

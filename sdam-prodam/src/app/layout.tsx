@@ -1,9 +1,11 @@
+import { MainProvider } from '@/providers/MainProvider';
 import { createTheme, MantineProvider, Stack } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';
-import { Rubik } from 'next/font/google';
+
+import { rubikSans } from '@/shared/consts/fonts';
 import './globals.css';
 
 const theme = createTheme({
@@ -40,12 +42,6 @@ const theme = createTheme({
   },
 });
 
-const rubikSans = Rubik({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-  weight: '400',
-});
-
 export const metadata = {
   title: 'СдамПродам',
   description: 'Недвижимость в Москве',
@@ -59,12 +55,14 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${rubikSans.className} antialiased box-border m-0 p-0`}>
-        <MantineProvider theme={theme}>
-          <Stack h='100%' gap={0}>
-            {children}
-          </Stack>
-          <Notifications />
-        </MantineProvider>
+        <MainProvider>
+          <MantineProvider theme={theme}>
+            <Stack h='100%' gap={0}>
+              {children}
+            </Stack>
+            <Notifications />
+          </MantineProvider>
+        </MainProvider>
       </body>
     </html>
   );

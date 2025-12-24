@@ -6,7 +6,6 @@ export default function CreateRealtyPage() {
   return (
     <Stack>
       <Text fz={'2.2rem'}>Разместить объект/арендатора/склад</Text>
-
       <CreateRealtyForm />
     </Stack>
   );

@@ -16,12 +16,14 @@ import {
   IconUser,
 } from '@tabler/icons-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react';
 import styles from './styles.module.scss';
 
 interface Props {
   data: RealtyCommercial;
 }
+
 export const Realty: FC<Props> = ({ data }) => (
   <Group align='stretch' justify='space-between'>
     <div className={styles.imageBlock}>
@@ -117,9 +119,14 @@ export const Realty: FC<Props> = ({ data }) => (
           <IconDotsVertical width={30} stroke={1} color='rgba(142, 142, 142, 1)' />
         </ActionIcon>
       </Menu.Target>
-
       <Menu.Dropdown>
-        <Menu.Item leftSection={<IconPencil size={14} />}>Редактировать</Menu.Item>
+        <Menu.Item
+          leftSection={<IconPencil size={14} />}
+          component={Link}
+          href={`/account/realty/${data._id}`}
+        >
+          Редактировать
+        </Menu.Item>
         <Menu.Item color='red' leftSection={<IconTrash size={14} />}>
           Удалить
         </Menu.Item>

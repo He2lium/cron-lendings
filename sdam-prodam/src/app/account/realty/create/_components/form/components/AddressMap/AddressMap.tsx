@@ -1,23 +1,30 @@
+import { $realty } from '@/entities/realty/model/store';
 import { api } from '@/shared/services/api/api';
 import { AnyObject } from '@/shared/types';
 import { Map } from '@/shared/ui/map/Map';
 import { Group, Select, Text } from '@mantine/core';
 import { useThrottledCallback } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
+import { useUnit } from 'effector-react';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import styles from '../../styles.module.scss';
 
 const addressKinds = new Set(['locality', 'street', 'house']);
 
-export const AddressMap = ({ city, onCityChange }: any) => {
+export const AddressMap = () => {
   const form = useFormContext();
+  const [city, setCity] = useState<string | null>('Москва');
   const [addrs, setAddrs] = useState<any[]>([]);
   const [geo, setGeo] = useState<{ center: number[]; zoom: number }>({
     center: [55.76, 37.64],
     zoom: 10,
   });
-  const [searchValue, setSearchValue] = useState('');
+  const realty = useUnit($realty);
+  const [search, setSearch] = useState({
+    value: '',
+    withRequest: true,
+  });
 
   const handleFetchGeoCode = async (v: string) => {
     const r: any = await api
@@ -40,7 +47,9 @@ export const AddressMap = ({ city, onCityChange }: any) => {
 
     form.setValue('address.city', ad.locality);
     form.setValue('address.street', ad.street);
-    form.setValue('address.house_number', ad.house);
+    form.setValue('address.region', ad.region || ad.locality);
+    form.setValue('address.building', ad.house);
+    form.setValue('address.coordinates', [+pos[1], +pos[0]]);
 
     if (pos) {
       setGeo((g) => ({ ...g, center: [+pos[1], +pos[0]], zoom: 15 }));
@@ -48,11 +57,11 @@ export const AddressMap = ({ city, onCityChange }: any) => {
   };
 
   const handleSearchAddress = useThrottledCallback(async () => {
-    if (searchValue) {
+    if (search.value) {
       const r: any = await api
         .get(`/suggest-maps`, {
           searchParams: {
-            text: `${city},${searchValue}`,
+            text: `${city},${search.value}`,
             types: 'street,house,area,province',
           },
         })
@@ -74,8 +83,24 @@ export const AddressMap = ({ city, onCityChange }: any) => {
   }, 600);
 
   useEffect(() => {
-    handleSearchAddress();
-  }, [searchValue]);
+    if (search.withRequest) {
+      handleSearchAddress();
+    }
+  }, [search.value]);
+
+  useEffect(() => {
+    if (realty) {
+      const newSearchValue = `${realty.address.street || ''}, ${realty.address.house_number}`;
+
+      setAddrs([{ label: newSearchValue, value: newSearchValue }]);
+
+      setSearch((s) => ({
+        ...s,
+        value: newSearchValue,
+        withRequest: true,
+      }));
+    }
+  }, [realty]);
 
   return (
     <>
@@ -84,7 +109,7 @@ export const AddressMap = ({ city, onCityChange }: any) => {
           label='Адрес'
           variant='unstyled'
           value={city}
-          onChange={onCityChange}
+          onChange={setCity}
           data={['Москва', 'Санкт-Петербург', 'Сочи']}
           rightSection={<IconChevronDown size={18} color='black' />}
           style={{ width: 'fit-content' }}
@@ -101,13 +126,15 @@ export const AddressMap = ({ city, onCityChange }: any) => {
           radius={'0 1rem 1rem 0'}
           flex={1}
           searchable
-          onSearchChange={setSearchValue}
+          onSearchChange={(value) =>
+            setSearch((s) => ({ ...s, value, withRequest: true }))
+          }
           placeholder='Улица'
           onChange={(v, s) => {
             form.setValue('address.city', v, { shouldValidate: true });
             handleFetchGeoCode(s.label);
           }}
-          searchValue={searchValue}
+          searchValue={search.value}
           rightSection={<IconChevronDown size={18} color='black' stroke={1} />}
         />
       </Group>

@@ -1,7 +1,13 @@
 'use client';
 import { createImageFx } from '@/entities/file-image/model/effects';
-import { createRealtyFx, generateRealtyDescFx } from '@/entities/realty/model/effects';
-import { $genereatedResponse } from '@/entities/realty/model/store';
+import {
+  createRealtyFx,
+  fetchRealtyFx,
+  generateRealtyDescFx,
+  resetRealtyEv,
+  updateRealtyFx,
+} from '@/entities/realty/model/effects';
+import { $genereatedResponse, $realty } from '@/entities/realty/model/store';
 import { fileToBinary } from '@/shared/utils/fileToBinary';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -28,8 +34,8 @@ import {
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import {
   Controller,
   FormProvider,
@@ -42,7 +48,7 @@ import schema from './schema';
 import styles from './styles.module.scss';
 
 export const CreateRealtyForm = () => {
-  const [city, setCity] = useState<string | null>('Москва');
+  const { id } = useParams();
   const fileDialog = useFileDialog();
   const router = useRouter();
   const imageLoading = useUnit(createImageFx.pending);
@@ -50,7 +56,11 @@ export const CreateRealtyForm = () => {
     $genereatedResponse,
     generateRealtyDescFx.pending,
   ]);
-  const form = useForm<any>({ mode: 'onChange', resolver: yupResolver(schema) });
+  const [realty, realtyPending] = useUnit([$realty, fetchRealtyFx.pending]);
+  const form = useForm<any>({
+    mode: 'onChange',
+    resolver: yupResolver(schema),
+  });
   const images = useFieldArray({ name: 'images', control: form.control, keyName: '_id' });
   const description = useWatch({ name: 'description', control: form.control });
 
@@ -63,16 +73,36 @@ export const CreateRealtyForm = () => {
 
   const handleSubmit = async (values: any) => {
     try {
-      await createRealtyFx({
-        pathParams: { realtyType: 'commercial' },
+      const fx = id ? updateRealtyFx : createRealtyFx;
+      console.log(values);
+      console.log({
         ...values,
+        pathParams: { realtyType: 'commercial', id },
         address: {
           ...values.address,
-          region: city,
+          coordinates: {
+            type: 'Point',
+            coordinates: values.address.coordinates,
+          },
         },
         description,
         total_area: +values.total_area,
-        images: values.images?.map((img: any) => img.id),
+        images: values.images?.fields?.map((img: any) => img.key),
+      });
+
+      await fx({
+        pathParams: { realtyType: 'commercial', id },
+        ...values,
+        address: {
+          ...values.address,
+          coordinates: {
+            type: 'Point',
+            coordinates: values.address.coordinates,
+          },
+        },
+        description,
+        total_area: +values.total_area,
+        images: values.images?.fields?.map((img: any) => img.key),
       });
 
       notifications.show({
@@ -99,8 +129,37 @@ export const CreateRealtyForm = () => {
   }, [generatedResponse]);
 
   useEffect(() => {
-    form.trigger();
-  }, []);
+    if (id && !realty) {
+      fetchRealtyFx({ pathParams: { id, realtyType: 'commercial' } });
+    }
+    // if (id && !realtyPending) {
+    // }
+    // if (!realtyPending) {
+    //   form.trigger();
+    // }
+    if (realty && !realtyPending) {
+      form.reset(
+        {
+          ...realty,
+          images:
+            realty.images?.map((key: string) => ({
+              key,
+            })) || [],
+        },
+        { keepErrors: false, keepDirty: false }
+      );
+      form.trigger();
+    }
+    if (!id) {
+      form.trigger();
+    }
+
+    return () => {
+      if (realty) {
+        resetRealtyEv();
+      }
+    };
+  }, [realty]);
 
   useEffect(() => {
     const load = async () => {
@@ -350,7 +409,7 @@ export const CreateRealtyForm = () => {
               name='realtyType'
             />
           </Group>
-          <AddressMap city={city} onCityChange={setCity} />
+          <AddressMap />
           <Text fz={'1.2rem'}>Контактная информация</Text>
           <Group>
             <Controller
@@ -434,13 +493,13 @@ export const CreateRealtyForm = () => {
           <Text fz={'1.2rem'}>Фотографии объекта</Text>
           <SimpleGrid cols={{ base: 4 }}>
             {images.fields.map((field: any, index: number) => (
-              <div className={styles.imageBlock} key={field.key}>
+              <div className={styles.imageBlock} key={field.key || field}>
                 <Image
                   width={200}
                   height={200}
                   quality={100}
                   alt=''
-                  src={`https://storage.yandexcloud.net/sp-media/images/optimized/basic/${field.key}/md.webp`}
+                  src={`https://storage.yandexcloud.net/sp-media/images/optimized/basic/${field.key || field}/md.webp`}
                   style={{ borderRadius: '1rem' }}
                 />
                 <ActionIcon

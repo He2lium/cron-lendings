@@ -1,3 +1,4 @@
+'use client';
 import { Placemark, Map as RYMap, YMaps } from '@iminside/react-yandex-maps';
 import { FC, useEffect, useState } from 'react';
 

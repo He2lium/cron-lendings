@@ -22,6 +22,23 @@ export const createRealty = async ({ pathParams, ...json }: AnyObject) => {
   return response.json();
 };
 
+export const updateRealty = async ({ pathParams, ...json }: AnyObject) => {
+  const response = await api.patch(
+    pathToURL('/proxy/realty/:realtyType/:id', pathParams),
+    {
+      json,
+    }
+  );
+  return response.json();
+};
+
+export const fetchRealty = async ({
+  pathParams,
+}: AnyObject): Promise<RealtyCommercial> => {
+  const response = await api.get(pathToURL('/proxy/realty/:realtyType/:id', pathParams));
+  return response.json();
+};
+
 export const generateRealtyDesc = async ({ pathParams, ...json }: AnyObject) => {
   const response = await api.post(
     pathToURL('/proxy/realty/:realtyType/description-generate', pathParams),
