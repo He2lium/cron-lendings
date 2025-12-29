@@ -1,11 +1,14 @@
 import { MainProvider } from '@/providers/MainProvider';
+import { rubikSans } from '@/shared/consts/fonts';
 import { createTheme, MantineProvider, Stack } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';
-
-import { rubikSans } from '@/shared/consts/fonts';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 import './globals.css';
 
 const theme = createTheme({

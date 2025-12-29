@@ -73,7 +73,7 @@ export const Realty: FC<Props> = ({ data }) => (
         <IconMapPin size={18} stroke={1} color='var(--mantine-primary-color-filled)' />
         <Text c='rgba(142, 142, 142, 1)' fz={'0.9rem'}>
           {cropTextAtMiddle(
-            `${data.address.city}, ${data.address.street}, ${data.address.house_number}`,
+            `${data.address.city}, ${data.address.street}, ${data.address.building}`,
             0,
             30
           )}

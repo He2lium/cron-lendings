@@ -1,0 +1,17 @@
+.banner {
+  background-image: url('/townhouse2.png');
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: #e8f5ff;
+  width: 100%;
+  padding: 1.5rem 6.5rem 0 1.5rem;
+  border-radius: 1rem;
+  height: 28rem;
+
+  button {
+    width: max-content;
+    font-weight: 300;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+  }
+}
