@@ -74,35 +74,27 @@ export const CreateRealtyForm = () => {
   const handleSubmit = async (values: any) => {
     try {
       const fx = id ? updateRealtyFx : createRealtyFx;
-      console.log(values);
-      console.log({
-        ...values,
-        pathParams: { realtyType: 'commercial', id },
-        address: {
-          ...values.address,
-          coordinates: {
-            type: 'Point',
-            coordinates: values.address.coordinates,
-          },
-        },
-        description,
-        total_area: +values.total_area,
-        images: values.images?.fields?.map((img: any) => img.key),
-      });
 
       await fx({
         pathParams: { realtyType: 'commercial', id },
         ...values,
         address: {
           ...values.address,
-          coordinates: {
-            type: 'Point',
-            coordinates: values.address.coordinates,
-          },
+          coordinates: values.address.coordinates?.type
+            ? values.coordinates
+            : {
+                type: 'Point',
+                coordinates: values.address.coordinates,
+              },
+          total_floors: values.address.total_floors
+            ? +values.address.total_floors
+            : undefined,
+          floor: values.address.floor ? +values.address.floor : undefined,
+          // floor: values.address.floor ? +values.address.floor : undefined,
         },
         description,
         total_area: +values.total_area,
-        images: values.images?.fields?.map((img: any) => img.key),
+        images: values.images?.map((img: any) => img.key),
       });
 
       notifications.show({
@@ -141,10 +133,7 @@ export const CreateRealtyForm = () => {
       form.reset(
         {
           ...realty,
-          images:
-            realty.images?.map((key: string) => ({
-              key,
-            })) || [],
+          images: realty._images || [],
         },
         { keepErrors: false, keepDirty: false }
       );
@@ -165,7 +154,7 @@ export const CreateRealtyForm = () => {
     const load = async () => {
       Array.from(fileDialog.files || []).forEach(async (file) => {
         const body = await fileToBinary(file);
-        const r = await createImageFx(body);
+        const r = await createImageFx({ type: 'basic', body });
 
         images.prepend(r);
       });
@@ -499,7 +488,7 @@ export const CreateRealtyForm = () => {
                   height={200}
                   quality={100}
                   alt=''
-                  src={`https://storage.yandexcloud.net/sp-media/images/optimized/basic/${field.key || field}/md.webp`}
+                  src={field._paths.lg}
                   style={{ borderRadius: '1rem' }}
                 />
                 <ActionIcon

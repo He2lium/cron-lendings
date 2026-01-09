@@ -2,7 +2,14 @@
 import { MainSidebar } from '@/widgets/main-sidebar/MainSidebar';
 import { Box, Button, Container, Group, Modal, Stack, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconPlus, IconUpload } from '@tabler/icons-react';
+import {
+  IconFileTypeDoc,
+  IconPhotoScan,
+  IconPlus,
+  IconStack2,
+  IconTrash,
+  IconUpload,
+} from '@tabler/icons-react';
 import { FMItem } from './_components/FMItem/FMItem';
 
 export default function FileManagerPage() {
@@ -15,6 +22,32 @@ export default function FileManagerPage() {
           <Group gap={'1.25rem'} justify='space-between' align='flex-start'>
             <MainSidebar
               title='Диск'
+              links={[
+                {
+                  href: '',
+                  label: 'Все файлы',
+                  leftSection: <IconStack2 stroke={1} />,
+                  active: true,
+                },
+                {
+                  href: '',
+                  label: 'Фото',
+                  leftSection: <IconPhotoScan stroke={1} />,
+                  active: true,
+                },
+                {
+                  href: '',
+                  label: 'Документы',
+                  leftSection: <IconFileTypeDoc stroke={1} />,
+                  active: true,
+                },
+                {
+                  href: '',
+                  label: 'Корзина',
+                  leftSection: <IconTrash stroke={1} />,
+                  active: true,
+                },
+              ]}
               subtitle={
                 <Stack gap={5}>
                   <Button

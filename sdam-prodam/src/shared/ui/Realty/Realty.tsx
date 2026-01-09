@@ -27,21 +27,28 @@ interface Props {
 export const Realty: FC<Props> = ({ data }) => (
   <Group align='stretch' justify='space-between'>
     <div className={styles.imageBlock}>
-      <Image
-        width={270}
-        height={160}
-        quality={100}
-        alt=''
-        src='/flats.png'
-        style={{ borderRadius: '1rem' }}
-      />
+      {
+        <Image
+          width={270}
+          height={160}
+          quality={100}
+          alt=''
+          src={data._images[0]?._paths.md || ''}
+          style={{ borderRadius: '1rem' }}
+        />
+      }
       <Checkbox className={styles.checkbox} />
-      <div className={styles.num}>№ 3678</div>
+      <div className={styles.num}>№ {data.number_id}</div>
     </div>
     <Stack justify='space-between' align='stretch'>
       <Group gap={5}>
         <IconBuilding width={30} stroke={1} color='var(--mantine-primary-color-filled)' />
-        <Text c='var(--mantine-primary-color-filled)' fw={700}>
+        <Text
+          c='var(--mantine-primary-color-filled)'
+          fw={700}
+          component={Link}
+          href={`/realty/${data.commercial_subtype}/${data._id}`}
+        >
           {TRANSLATES[data.commercial_subtype]}
         </Text>
       </Group>

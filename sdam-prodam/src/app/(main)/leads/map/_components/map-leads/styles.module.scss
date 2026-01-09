@@ -1,0 +1,17 @@
+.leads {
+  position: absolute;
+  top: 10;
+  right: 10;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  max-height: calc(100% - 20px);
+  width: 300px;
+  overflow: scroll;
+}
+
+.lead {
+  background: rgba(251, 251, 251, 1);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+}

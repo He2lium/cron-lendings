@@ -90,10 +90,10 @@ export const AddressMap = () => {
 
   useEffect(() => {
     if (realty) {
-      const newSearchValue = `${realty.address.street || ''}, ${realty.address.house_number}`;
+      const newSearchValue = `${realty.address.street || ''}, ${realty.address.building || ''}`;
 
       setAddrs([{ label: newSearchValue, value: newSearchValue }]);
-
+      handleFetchGeoCode(newSearchValue);
       setSearch((s) => ({
         ...s,
         value: newSearchValue,

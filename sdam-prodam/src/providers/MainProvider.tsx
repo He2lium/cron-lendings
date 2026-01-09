@@ -1,6 +1,7 @@
 'use client';
 import { getAuthUserFx } from '@/entities/user/model/effects';
 import { $authStore } from '@/entities/user/model/store';
+import { Center, Loader } from '@mantine/core';
 import { useUnit } from 'effector-react';
 import { ReactNode, useEffect } from 'react';
 
@@ -14,7 +15,11 @@ export const MainProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   if (authPending) {
-    return <div>'Loading'</div>;
+    return (
+      <Center h={'80vh'}>
+        <Loader color='blue' type='bars' />
+      </Center>
+    );
   }
 
   return <>{authPending || !user ? null : children}</>;

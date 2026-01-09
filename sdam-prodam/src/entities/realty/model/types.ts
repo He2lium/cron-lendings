@@ -1,10 +1,12 @@
-import { InterestPoint } from '@/shared/types';
+import { Image } from '@/entities/file-image/model/types';
+import { Address } from '@/shared/types';
 
 type RealtySharedType = {
   _id: string;
   description: string;
-  address: InterestPoint;
+  address: Address;
   images?: string[];
+  _images: Image[];
   docs?: string;
 };
 
@@ -83,6 +85,7 @@ export interface RealtyCommercial extends RealtySharedType {
   maxElectricalLoad?: number;
   hasParking?: boolean;
   total_area: number;
+  number_id: number;
   condition?: RealtyCondition;
   communications?: RealtyCommunication[];
   highVoltagePower?: boolean;

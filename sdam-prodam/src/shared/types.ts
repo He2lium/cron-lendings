@@ -11,7 +11,7 @@ export interface BaseListResponse<T> {
   meta: MetaResponse;
 }
 
-export interface InterestPoint {
+export interface Address {
   city: string;
   district: string;
   street: string;
@@ -19,11 +19,14 @@ export interface InterestPoint {
   building: string;
   entrance: string;
   floor: number;
-  totalFloors: number;
+  total_floors: number;
+  coordinates: {
+    type: string;
+    coordinates: number[][];
+  };
   unit: string;
   notice: string;
   microdistrict: string;
   cadastral_number: string;
-  coordinates: number[];
   postal_code: string;
 }

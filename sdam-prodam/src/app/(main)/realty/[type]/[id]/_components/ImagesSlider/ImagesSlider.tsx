@@ -1,13 +1,18 @@
+import { Image } from '@/entities/file-image/model/types';
+import { Stack } from '@mantine/core';
+import NextImage from 'next/image';
+import { FC, useState } from 'react';
 import { Navigation, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import { Stack } from '@mantine/core';
-import Image from 'next/image';
-import { useState } from 'react';
 import './styles.css';
-export const ImagesSlider = () => {
-  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
+interface Props {
+  images: Image[];
+}
+
+export const ImagesSlider: FC<Props> = ({ images }) => {
+  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  console.log(images);
   return (
     <Stack>
       <Swiper
@@ -24,96 +29,17 @@ export const ImagesSlider = () => {
         modules={[Navigation, Thumbs]}
         className='mySwiper2'
       >
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
+        {images.map((image) => (
+          <SwiperSlide key={image._id}>
+            <NextImage
+              src={image._paths.lg || ''}
+              width={500}
+              height={500}
+              style={{ width: '100%' }}
+              alt=''
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
       <Swiper
         onSwiper={setThumbsSwiper}
@@ -122,96 +48,17 @@ export const ImagesSlider = () => {
         modules={[Navigation, Thumbs]}
         className='mySwiper'
       >
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src='/realt1.png'
-            width={500}
-            height={500}
-            style={{ width: '100%' }}
-            alt=''
-          />
-        </SwiperSlide>
+        {images.map((image) => (
+          <SwiperSlide key={image._id}>
+            <NextImage
+              src={image._paths.md || ''}
+              width={500}
+              height={500}
+              style={{ width: '100%' }}
+              alt=''
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </Stack>
   );

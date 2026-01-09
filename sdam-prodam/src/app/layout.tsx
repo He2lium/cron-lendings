@@ -58,14 +58,14 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${rubikSans.className} antialiased box-border m-0 p-0`}>
-        <MainProvider>
-          <MantineProvider theme={theme}>
+        <MantineProvider theme={theme}>
+          <MainProvider>
             <Stack h='100%' gap={0}>
               {children}
             </Stack>
             <Notifications />
-          </MantineProvider>
-        </MainProvider>
+          </MainProvider>
+        </MantineProvider>
       </body>
     </html>
   );

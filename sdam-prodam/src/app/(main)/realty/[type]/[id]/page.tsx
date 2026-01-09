@@ -1,23 +1,49 @@
 'use client';
+import { fetchRealtyFx, resetRealtyEv } from '@/entities/realty/model/effects';
+import { $realty } from '@/entities/realty/model/store';
 import { rubikSansLight } from '@/shared/consts/fonts';
+import { TRANSLATES } from '@/shared/translates';
 import { Map } from '@/shared/ui/map/Map';
 import { Box, Button, Container, Group, SimpleGrid, Stack, Text } from '@mantine/core';
+import { useUnit } from 'effector-react';
+import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { Banners } from './_components/Banners/Banners';
 import { ImagesSlider } from './_components/ImagesSlider/ImagesSlider';
 
 export default function RealtyView() {
+  const realty = useUnit($realty);
+  const { id } = useParams();
   const geo = {
-    center: [55.76, 37.64],
+    center: !realty ? [55.76, 37.64] : (realty.address.coordinates as any).coordinates,
     zoom: 15,
   };
+
+  useEffect(() => {
+    fetchRealtyFx({ pathParams: { id, realtyType: 'commercial' } });
+
+    return () => {
+      if (realty) {
+        resetRealtyEv();
+      }
+    };
+  }, []);
+
+  if (!realty) {
+    return null;
+  }
 
   return (
     <Box mt={'2rem'} mb={'2rem'}>
       <Container size={1200}>
         <Group align='flex-start' gap={'2rem'}>
           <Stack w={'50%'}>
-            <Text fz={'2.2rem'}>4-к. квартира, 112,6 м², 3/4 эт.</Text>
-            <ImagesSlider />
+            <Text fz={'2.2rem'}>
+              {TRANSLATES[realty.commercial_subtype]}, {realty.total_area} м²,{' '}
+              {realty.address.floor}
+              {realty.address.total_floors ? ` из ${realty.address.total_floors}` : ''}эт.
+            </Text>
+            <ImagesSlider images={realty._images} />
             <Text fz={'1.2rem'} fw={700}>
               О квартире
             </Text>
@@ -38,7 +64,7 @@ export default function RealtyView() {
                 <Text className={rubikSansLight.className} fw={300}>
                   Общая площадь:
                 </Text>
-                <Text>112.6 м²</Text>
+                <Text>{realty.total_area} м²</Text>
               </Group>
               <Group justify='space-between'>
                 <Text className={rubikSansLight.className} fw={300}>
@@ -58,30 +84,32 @@ export default function RealtyView() {
                 </Text>
                 <Text>свободная</Text>
               </Group>
-              <Group justify='space-between'>
-                <Text className={rubikSansLight.className} fw={300}>
-                  Этаж:
-                </Text>
-                <Text>3 из 4</Text>
-              </Group>
+              {(realty.address.floor || realty.address.total_floors) && (
+                <Group justify='space-between'>
+                  <Text className={rubikSansLight.className} fw={300}>
+                    Этаж:
+                  </Text>
+                  <Text>
+                    {realty.address.floor}
+                    {realty.address.total_floors
+                      ? ` из ${realty.address.total_floors}`
+                      : ''}
+                  </Text>
+                </Group>
+              )}
             </SimpleGrid>
             <Text fz={'1.2rem'} fw={700} mt={'2rem'}>
               Расположение
             </Text>
             <Text className={rubikSansLight.className} fw={300}>
-              Москва, Вознесенский пер., 11с3
+              {realty.address.city},{realty.address.street},{realty.address.building}
             </Text>
             <Map {...geo} />
             <Text fz={'1.2rem'} fw={700} mt={'2rem'}>
               Описание
             </Text>
             <Text className={rubikSansLight.className} fw={300}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-              non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+              {realty.description}
             </Text>
           </Stack>
           <Stack>
