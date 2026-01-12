@@ -35,10 +35,10 @@ export const Map: FC<Props> = ({
 
   const handleBoundsChange = (e: any) => {
     const { newZoom, newCenter } = e.originalEvent;
+    console.log(e);
     setState((s) => ({ ...s, zoom: newZoom, center: newCenter }));
     onBoundsChange?.(e);
   };
-  console.log(points);
 
   return (
     <div className={styles.wrap}>
@@ -49,17 +49,11 @@ export const Map: FC<Props> = ({
           state={state}
           onBoundsChange={handleBoundsChange}
         >
-          <Clusterer>
-            {points?.map((point) => (
+          <Clusterer options={{ maxZoom: 5 }}>
+            {points?.map(({ key, ...point }) => (
               <Placemark
+                key={key}
                 {...point}
-                // geometry={point}
-                // key={point.toString()}
-                // properties={{
-                //   iconContent: '2',
-                //   balloonContent:
-                //     '<div id="driver-2" class="driver-card">ЖК "Новый Век" <br /> <strong>12 лидов</strong></div>',
-                // }}
                 onBalloonOpen={() => {
                   console.log('opened');
                 }}

@@ -36,10 +36,10 @@ export const LeadsTable = () => {
                 -
               </Text>
               <Text flex={1} fz={'0.9rem'}>
-                {lead._interest_point.address.city}
+                {lead._interest_point?.address.city || '-'}
               </Text>
               <Text flex={1} fz={'0.9rem'}>
-                {lead._interest_point.title}
+                {lead._interest_point?.title || '-'}
               </Text>
               <Text flex={1} fz={'0.9rem'}>
                 {/* +7 9** *** **40{' '} */}

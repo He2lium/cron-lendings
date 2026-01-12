@@ -22,5 +22,5 @@ export const MainProvider = ({ children }: { children: ReactNode }) => {
     );
   }
 
-  return <>{authPending || !user ? null : children}</>;
+  return <>{children}</>;
 };
